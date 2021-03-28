@@ -29,7 +29,7 @@ class PacientView():
 
     def excluir(self):
         try:
-            cpf = int(input("ID do vendedor:"))
+            cpf = int(input("Digite o CPF do Paciente:"))
         except ValueError as e:
             print('\nERRO: Digite um valor valido: {}'.format(e))
         else:    
@@ -63,4 +63,4 @@ class PacientView():
         print("Paciente Cadastrado com sucesso")
     
     def cadastro_erro(self):
-        print("\n Verifique se os valores.")
+        print("\n Verifique os valores.")
