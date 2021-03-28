@@ -8,7 +8,7 @@ class PacientView():
         print ("\n ---- Cadastro do Paciente ----")
         print ("1 - Incluir Paciente")
         print ("2 - Excluir Paciente")
-        print ("3 - Alterar Paciente")
+        print ("3 -  Alterações no Cadastro")
         print ("4 - Listagem de Pacientes por CPF")
         print ("0 - Sair")
         opcao = int(input('Digite uma opção: '))
@@ -17,7 +17,7 @@ class PacientView():
     def incluir(self):
         nome = input("Nome do Paciente:")
         sobrenome = input("Sobrenome do Paciente:")
-        idade = int(input("CPF do Paciente:"))
+        idade = int(input("Idade:"))
         cls = lambda: os.system('cls' if os.name=='nt' else 'clear')
         try:
             cpf = int(input("Numero do CPF:"))
@@ -48,7 +48,7 @@ class PacientView():
             print("CPF: "+ str(paciente.cpf))
             c = c + 1
 
-    def atualiza(self):
+    def atualizar(self):
         nome = input("Nome do Paciente:")
         sobrenome = input("Sobrenome do Paciente:")
         idade = int(input("CPF do Paciente:"))
