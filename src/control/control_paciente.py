@@ -1,5 +1,4 @@
-from paciente import Paciente
-
+from model.paciente import Paciente
 
 class ControladorPaciente(Paciente):
     def __init__(self):
