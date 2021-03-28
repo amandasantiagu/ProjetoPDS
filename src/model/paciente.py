@@ -1,16 +1,25 @@
 class Paciente():
-    def __init__(self, nome_completo: str, cpf: int, idade: int):
-        self.__nome_completo = nome_completo
+    def __init__(self, nome: str, sobrenome: str, cpf: int, idade: int):
+        self.__nome = nome
+        self.__sobrenome = sobrenome
         self.__cpf = cpf
         self.__idade = idade
         
     @property
-    def nome_completo(self):
-        return self.__nome_completo
+    def nome(self):
+        return self.__nome
 
-    @nome_completo.setter
-    def nome_completo(self, nome_completo):
-        self.__nome_completo = nome_completo
+    @nome.setter
+    def nome(self, nome):
+        self.__nome = nome
+    
+    @property
+    def sobrenome(self):
+        return self.__sobrenome
+
+    @sobrenome.setter
+    def sobrenome(self, sobrenome):
+        self.__sobrenome = sobrenome
 
     @property
     def cpf(self):
