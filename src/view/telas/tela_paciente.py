@@ -1,6 +1,6 @@
 import os
 
-class PacientView():
+class PacienteView():
     def __init__(self):
         pass
 
