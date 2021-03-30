@@ -1,5 +1,7 @@
+from enum import Enum
+
 class Vacina():
-    def __init__(self, tipo_vacina: str, fabricante: str, quantidade: int):
+    def __init__(self, tipo_vacina: str, fabricante: str,  quantidade: int, dose: DoseVacina = DoseVacina.PRIMEIRA):
         self.__tipo_vacina = tipo_vacina
         self.__fabricante = fabricante
         self.__quantidade = quantidade
@@ -27,3 +29,7 @@ class Vacina():
     @quantidade.setter
     def quantidade(self, quantidade):
         self.__quantidade = quantidade
+
+class DoseVacina(Enum):
+    PRIMEIRA = 1
+    SEGUNDA = 2

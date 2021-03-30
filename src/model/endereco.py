@@ -1,8 +1,4 @@
-from abc import ABC, abstractmethod
-
-
-class Endereco(ABC):
-    @abstractmethod  
+class Endereco:
     def __init__(self,  cidade: str, rua: str, num_casa: int):
         self.__rua = rua
         self.__num_casa = num_casa
