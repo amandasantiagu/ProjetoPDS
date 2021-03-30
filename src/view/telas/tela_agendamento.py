@@ -1,3 +1,8 @@
+import os
+
+class AgendamentoView():
+    def __init__(self):
+        pass
 
 def tela_agendamento(self):
     print ("\n ---- Cadastro de Agendamentos ----")

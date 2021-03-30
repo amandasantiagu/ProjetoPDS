@@ -1,3 +1,4 @@
+
 from pessoa import Pessoa
 
 class Paciente():
