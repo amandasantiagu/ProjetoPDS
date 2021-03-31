@@ -6,7 +6,6 @@ class Enfermeiro():
         self.__num_atendimentos = num_atendimentos
         super(nome_completo, cpf, idade, endereco)
 
-
     @property
     def matricula_coren(self):
         return self.__matricula_coren

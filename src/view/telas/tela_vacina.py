@@ -15,11 +15,11 @@ class VacinaView():
         return opcao
 
     def incluir(self):
-        tipo_vacina = input("Tipo de Vacina:")
-        fabricante = input("Fabricante da Vacina:")
+        tipo_vacina = input("Tipo de Vacina: ")
+        fabricante = input("Fabricante da Vacina: ")
         cls = lambda: os.system('cls' if os.name=='nt' else 'clear')
         try:
-            quantidade = int(input("Digite a quantidade:"))
+            quantidade = int(input("Digite a quantidade: "))
         except ValueError as e:
             print('\nERRO: Caracter inválido: {}'.format(e))
         else:
@@ -59,7 +59,7 @@ class VacinaView():
             return [tipo_vacina, fabricante, quantidade]
 
     def cadastro_sucesso(self):
-        print("Paciente Cadastrado com sucesso")
+        print("Vacina Cadastrada com sucesso")
     
     def cadastro_erro(self):
         print("\n Verifique os valores.")
