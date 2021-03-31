@@ -1,8 +1,8 @@
 import os
 
-class EnfermeiroView():
-    def __init__(self):
-        pass
+from abstractTela import AbstractTela
+
+class EnfermeiroView(AbstractTela):
 
     def tela_paciente(self):
         print ("\n ---- Cadastro do Enfermeiro ----")
@@ -11,56 +11,48 @@ class EnfermeiroView():
         print ("3 - Alterações no Cadastro")
         print ("4 - Listagem de Enfermeiros por matricula")
         print ("0 - Sair")
-        opcao = int(input('Digite uma opção: '))
+        opcao = self.le_inteiro('Digite uma opção: ')
         return opcao
 
     def incluir(self):
         nome_completo = input("Nome do Enfermeiro:")
-        idade = int(input("Idade:"))
+        idade = self.le_inteiro("Idade:")
         cpf = str(input("Digite o CPF:"))
-        cls = lambda: os.system('cls' if os.name=='nt' else 'clear')
         try:
-            matricula_coren = int(input("Numero de matricula coren:"))
+            matricula_coren = self.le_inteiro("Numero de matricula coren:")
         except ValueError as e:
             print('\nERRO: Digite um valor valido: {}'.format(e))
         else:
-            cls()
+            self.clear()
             return [nome_completo, idade, cpf, matricula_coren]
 
     def excluir(self):
         try:
-            matricula_coren = int(input("ID do vendedor:"))
+            matricula_coren = self.le_inteiro("ID do vendedor:")
         except ValueError as e:
             print('\nERRO: Digite um valor valido: {}'.format(e))
         else:    
             return matricula_coren
 
     
-    def listagem(self, listagem):
-        cls = lambda: os.system('cls' if os.name=='nt' else 'clear')
-        cls()
-        c = 0
+    def listar(self, listagem):
+        self.clear()
         print("\n Lista de Enfermeiros:")
         for enfermeiro in listagem:
             print("Nome: " + enfermeiro.nome_completo)
             print("Idade: "+ str(enfermeiro.idade))
             print("CPF: "+ enfermeiro.cpf)
             print("Matricula/COREN: " + enfermeiro.matricula_coren)
-            c = c + 1
 
     def atualiza(self):
         nome_completo = input("Nome do Enfermeiro:")
-        idade = int(input("Idade:"))
+        idade = self.le_inteiro("Idade:")
         cpf = input("Digite o cpf:")
         try:
-           matricula_coren = int(input("Digite a MATRICULA/COREN:"))
+           matricula_coren = self.le_inteiro("Digite a MATRICULA/COREN:")
         except ValueError as e:
             print('\nERRO: Digite um valor valido: {}'.format(e))
         else: 
             return [nome_completo, idade, cpf, matricula_coren]
 
-    def cadastro_sucesso(self):
-        print("Enfermeiro Cadastrado com sucesso")
-    
-    def cadastro_erro(self):
-        print("\n Verifique os valores.")
+
