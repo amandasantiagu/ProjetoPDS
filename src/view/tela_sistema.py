@@ -1,3 +1,8 @@
+import os
+
+class telaSistemaView():
+    def __init__(self):
+        pass
 
 def menu_principal(self):
     print ("\n ---- Posto (nome Posto) ----")

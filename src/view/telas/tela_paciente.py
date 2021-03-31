@@ -15,8 +15,7 @@ class PacienteView():
         return opcao
 
     def incluir(self):
-        nome = input("Nome do Paciente:")
-        sobrenome = input("Sobrenome do Paciente:")
+        nome_completo = input("Nome Completo do Paciente: ")
         idade = int(input("Idade:"))
         cls = lambda: os.system('cls' if os.name=='nt' else 'clear')
         try:
@@ -25,7 +24,7 @@ class PacienteView():
             print('\nERRO: Digite um valor valido: {}'.format(e))
         else:
             cls()
-            return [nome, sobrenome, idade, cpf]
+            return [nome_completo, idade, cpf]
 
     def excluir(self):
         try:
@@ -42,22 +41,20 @@ class PacienteView():
         c = 0
         print("\n Lista de Pacientes:")
         for paciente in listagem:
-            print("Nome: " + paciente.nome)
-            print("Sobrenome: "+ paciente.sobrenome)
+            print("Nome: " + paciente.nome_completo)
             print("Idade: "+ str(paciente.idade))
             print("CPF: "+ str(paciente.cpf))
             c = c + 1
 
     def atualizar(self):
-        nome = input("Nome do Paciente:")
-        sobrenome = input("Sobrenome do Paciente:")
+        nome_completo = input("Nome Completo do Paciente: ")
         idade = int(input("CPF do Paciente:"))
         try:
            cpf = int(input("Digite o cpf:"))
         except ValueError as e:
             print('\nERRO: Digite um valor valido: {}'.format(e))
         else: 
-            return [nome, sobrenome, idade, cpf]
+            return [nome_completo, idade, cpf]
 
     def cadastro_sucesso(self):
         print("Paciente Cadastrado com sucesso")

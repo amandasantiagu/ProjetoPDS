@@ -15,8 +15,7 @@ class EnfermeiroView():
         return opcao
 
     def incluir(self):
-        nome = input("Nome do Enfermeiro:")
-        sobrenome = input("Sobrenome:")
+        nome_completo = input("Nome do Enfermeiro:")
         idade = int(input("Idade:"))
         cpf = str(input("Digite o CPF:"))
         cls = lambda: os.system('cls' if os.name=='nt' else 'clear')
@@ -26,7 +25,7 @@ class EnfermeiroView():
             print('\nERRO: Digite um valor valido: {}'.format(e))
         else:
             cls()
-            return [nome, sobrenome, idade, cpf, matricula_coren]
+            return [nome_completo, idade, cpf, matricula_coren]
 
     def excluir(self):
         try:
@@ -43,16 +42,14 @@ class EnfermeiroView():
         c = 0
         print("\n Lista de Enfermeiros:")
         for enfermeiro in listagem:
-            print("Nome: " + enfermeiro.nome)
-            print("Sobrenome: "+ enfermeiro.sobrenome)
+            print("Nome: " + enfermeiro.nome_completo)
             print("Idade: "+ str(enfermeiro.idade))
             print("CPF: "+ enfermeiro.cpf)
             print("Matricula/COREN: " + enfermeiro.matricula_coren)
             c = c + 1
 
     def atualiza(self):
-        nome = input("Nome do Enfermeiro:")
-        sobrenome = input("Sobrenome:")
+        nome_completo = input("Nome do Enfermeiro:")
         idade = int(input("Idade:"))
         cpf = input("Digite o cpf:")
         try:
@@ -60,7 +57,7 @@ class EnfermeiroView():
         except ValueError as e:
             print('\nERRO: Digite um valor valido: {}'.format(e))
         else: 
-            return [nome, sobrenome, idade, cpf, matricula_coren]
+            return [nome_completo, idade, cpf, matricula_coren]
 
     def cadastro_sucesso(self):
         print("Enfermeiro Cadastrado com sucesso")

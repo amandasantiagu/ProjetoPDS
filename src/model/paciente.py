@@ -2,27 +2,16 @@
 from pessoa import Pessoa
 
 class Paciente():
-    def __init__(self, nome: str, sobrenome: str, cpf: int, idade: int):
-        self.__nome = nome
-        self.__sobrenome = sobrenome
-        self.__cpf = cpf
-        self.__idade = idade
+    def __init__(self, nome_completo, cpf, idade, endereco):
+        super(nome_completo, cpf, idade, endereco)
         
     @property
-    def nome(self):
-        return self.__nome
+    def nome_completo(self):
+        return self.__nome_completo
 
-    @nome.setter
-    def nome(self, nome):
-        self.__nome = nome
-    
-    @property
-    def sobrenome(self):
-        return self.__sobrenome
-
-    @sobrenome.setter
-    def sobrenome(self, sobrenome):
-        self.__sobrenome = sobrenome
+    @nome_completo.setter
+    def nome_completo(self, nome_completo):
+        self.__nome_completo = nome_completo
 
     @property
     def cpf(self):
@@ -39,3 +28,11 @@ class Paciente():
     @idade.setter
     def idade(self, idade):
         self.__idade = idade
+
+    @property
+    def endereco(self):
+        return self.__endereco
+
+    @endereco.setter
+    def endereco(self, endereco):
+        self.__endereco = endereco
