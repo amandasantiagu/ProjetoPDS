@@ -1,8 +1,8 @@
 import os
 
-from abstractTela import AbstractTela
+from abstractView import AbstractView
 
-class PacienteView(AbstractTela):
+class PacienteView(AbstractView):
 
     def tela_paciente(self):
         print ("\n ---- Cadastro do Paciente ----")

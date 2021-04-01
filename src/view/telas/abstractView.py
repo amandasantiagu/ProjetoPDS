@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class AbstractTela(ABC):
+class AbstractView(ABC):
 
     def clear(self):
         lambda: os.system('cls' if os.name=='nt' else 'clear')

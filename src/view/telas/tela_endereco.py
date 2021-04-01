@@ -1,6 +1,7 @@
 from models.endereco import Endereco
+from abstractView import abstractView
 
-class TelaEndereco:
+class EnderecoView(AbstractView):
 
     def novo(self):
         rua = input("Nome da Rua: ")

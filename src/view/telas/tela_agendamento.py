@@ -1,8 +1,8 @@
 import os
 
-from abstractTela import AbstractTela
+from abstractView import AbstractView
 
-class AgendamentoView(AbstractTela):
+class AgendamentoView(AbstractView):
     def __init__(self):
         pass
 

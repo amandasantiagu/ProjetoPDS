@@ -3,7 +3,7 @@ from view.telas.tela_paciente import PacienteView
 from view.telas.tela_endereco import TelaEndereco
 
 
-class ControladorPaciente():
+class PacienteController():
     def __init__(self):
         self.__pacientes = []
         self.__view = PacienteView()

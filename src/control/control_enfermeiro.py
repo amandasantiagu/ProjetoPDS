@@ -3,7 +3,7 @@ from view.telas.tela_enfermeiro import EnfermeiroView
 from view.telas.tela_endereco import TelaEndereco
 
 
-class ControladorEnfermeiro():
+class EnfermeiroController():
     def __init__(self):
         self.__enfermeiros = []
         self.__view = EnfermeiroView()

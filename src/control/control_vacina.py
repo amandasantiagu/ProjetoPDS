@@ -1,3 +1,5 @@
+from view.telas.tela_vacina import VacinaView
+
 class VacinaController():
     def __init__(self):
         self.__view = VacinaView()

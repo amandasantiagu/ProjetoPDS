@@ -1,6 +1,7 @@
 import os
+from abstractView import AbstractView
 
-class VacinaView():
+class VacinaView(AbstractView):
 
     def tela_vacina(self):
         print ("\n ---- Cadastro de Vacina ----")
