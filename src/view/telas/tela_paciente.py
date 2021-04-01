@@ -16,22 +16,22 @@ class PacienteView(AbstractTela):
 
     def incluir(self):
         nome_completo = input("Nome Completo do Paciente: ")
-        idade = self.le_inteiro("Idade:"))
+        idade = input("Idade: ")
         try:
-            cpf = self.le_inteiro("Numero do CPF:"))
+            cpf = int(input("Número do CPF: "))
+            self.clear()
+            return {'nome_completo': nome_completom 'idade':idade, 'cpf':cpf}
         except ValueError as e:
             print('\nERRO: Digite um valor valido: {}'.format(e))
-        else:
-            self.clear()
-            return [nome_completo, idade, cpf]
+            return self.incluir()
 
     def excluir(self):
         try:
-            cpf = self.le_inteiro("Digite o CPF do Paciente:"))
+            cpf = int(input("Digite o CPF do paciente para deletar"))
+            return cpf
         except ValueError as e:
             print('\nERRO: Digite um valor valido: {}'.format(e))
-        else:    
-            return cpf
+            return self.excluir()
 
     
     def listar(self, listagem):
@@ -41,13 +41,25 @@ class PacienteView(AbstractTela):
             print("Nome: " + paciente.nome_completo)
             print("Idade: "+ str(paciente.idade))
             print("CPF: "+ str(paciente.cpf))
+            print("--------------------------------\n")
+
 
     def atualizar(self):
         nome_completo = input("Nome Completo do Paciente: ")
-        idade = self.le_inteiro("CPF do Paciente:"))
+        idade = input("Idade do Paciente: ")
         try:
-           cpf = self.le_inteiro("Digite o cpf:"))
+            cpf = int(input("CPF do Paciente"))
+            return {'nome_completo': nome_completom 'idade':idade, 'cpf':cpf}
         except ValueError as e:
-            print('\nERRO: Digite um valor valido: {}'.format(e))
-        else: 
-            return [nome_completo, idade, cpf]
+            self.dado_invalido('CPF')
+            return self.atualizar()
+
+
+    def cadastro_sucesso(self):
+        print("Paciente cadastrado com sucesso!")
+
+    def paciente_duplicado(self):
+        print("Erro! Paciente já cadastrado.")
+
+    def dado_invalido(self, dado_str):
+        print("Erro! Dado inválido: ", dado_str)
