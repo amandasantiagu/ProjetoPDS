@@ -1,50 +1,57 @@
 from model.paciente import Paciente
 from view.telas.tela_paciente import PacienteView
+from view.telas.tela_endereco import TelaEndereco
 
-## acho que precisaria receber o POSTO DE SAUDE (SISTEMA) / controller tbm?
+
 class ControladorPaciente():
     def __init__(self):
         self.__pacientes = []
         self.__view = PacienteView()
 
-## Utilizar um dicionario
-    def option(self):
-        opcao = self.__view.PacienteView()
-        while opcao != "0":
-            if opcao == "1":
-                self.cadastra()
-            elif opcao == "2":
-                self.listagem()
-            elif opcao == "3":
-                self.atualiza()
-            elif opcao == "4":
-                self.remove()
-            opcao = self.__view.PacienteView()
 
-    ## Endereço add???
-    def incluir_paciente(self, nome_completo, cpf, idade) -> Paciente:
+    def option(self):
+        escolha = self.__view.tela_paciente()
+        options = {
+                1: incluir,
+                2: excluir,
+                3: atualiza,
+                4: listagem,
+                0: self.clear,
+                }
+
+
+    def incluir(self) -> Paciente:
         dados = self.__view.incluir()
-        paciente = Paciente(nome_completo, cpf, idade)
-        if tela is not None:
-            for x in self.__pacientes:
-                if x.cpf == cpf:
-                    return
-        if paciente.idade >= 0 and paciente.idade <= 150:
-            self.__pacientes.append(paciente)
-            self.__view.cadastro_sucesso()
+        nome = dados['nome_completo']
+        cpf = dados['cpf']
+        idade = dados['idade']
+        endereco = TelaEndereco().novo()
+        paciente = Paciente(nome, cpf, idade)
+        paciente.endereco = endereco
+        for paciente in self.__pacientes:
+            if paciente.cpf == cpf:
+                self.__view.paciente_duplicado()
+                return
+        if paciente.idade < 0:
+            self.__view.dado_invalido("Idade")
+        self.__pacientes.append(paciente)
+        self.__view.cadastro_sucesso()
 
     def listagem(self):
-        self.__view.listagem() 
+        self.__view.listagem(self.pacientes) 
 
     def atualiza(self):
         dados = self.__view.atualiza()
-        for paciente in self.__view:
-            if paciente.cpf == dados[2]:
-                paciente.nome_completo = dados[0]
-                paciente.idade = dados[1]
+        for paciente in self.pacientes:
+            if paciente.cpf == dados['cpf']:
+                paciente.nome_completo = dados['nome_completo']
+                paciente.idade = dados['idade']
 
-    def remove(self):
-        cpf = self.__view.remove()
-        for paciente in self.__view.pacientes:
+    def excluir(self):
+        cpf = self.__view.excluir()
+        for paciente in self.pacientes:
             if paciente.cpf == cpf:
-                self.__view.remove(paciente)
+                self.__pacientes.remove(paciente)
+                return
+
+
