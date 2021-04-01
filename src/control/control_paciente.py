@@ -1,6 +1,6 @@
 from model.paciente import Paciente
 from view.telas.tela_paciente import PacienteView
-from view.telas.tela_endereco import TelaEndereco
+from view.telas.tela_endereco import EnderecoView
 
 
 class PacienteController():
