@@ -41,7 +41,7 @@ class AbstractTela(ABC):
 
 
     @abstractmethod
-    def deletar(self):
+    def excluir(self):
         pass
 
 
