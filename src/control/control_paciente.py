@@ -55,3 +55,6 @@ class PacienteController():
                 return
 
 
+    @property
+    def pacientes(self):
+        return self.__pacientes

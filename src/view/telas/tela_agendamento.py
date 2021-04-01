@@ -18,12 +18,13 @@ class AgendamentoView(AbstractView):
         data = input("Data Escolhida: ")
         horario = input("Horario Escolhida: ")
         self.clear()
-        return [data, horario]
+        return {"data":data, "horario":horario}
 
     def excluir(self):
         data = input("Data de Agendamento: ")
         horario = input("Horario de Agendamento:")
-        return [data, horario]
+        self.clear()
+        return {"data":data, "horario":horario}
 
     
     def listar(self, listagem):
@@ -39,5 +40,5 @@ class AgendamentoView(AbstractView):
     def atualiza(self):
         data = input("Data de Agendamento: ")
         horario = input("Horario de Agendamento: ")
-        return [data, horario]
+        return {"data":data, "horario":horario}
 

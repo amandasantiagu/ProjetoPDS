@@ -55,3 +55,6 @@ class EnfermeiroController():
                 return
 
 
+    @property
+    def enfermeiros(self):
+        return self.__enfermeiros

@@ -2,7 +2,7 @@ from abstractView import AbstractView
 
 class EnfermeiroView(AbstractView):
 
-    def tela_paciente(self):
+    def tela_enfermeiro(self):
         print ("\n ---- Cadastro do Enfermeiro ----")
         print ("1 - Incluir Enfermeiro")
         print ("2 - Excluir Enfermeiro")
@@ -52,5 +52,19 @@ class EnfermeiroView(AbstractView):
             print('\nERRO: Digite um valor valido: {}'.format(e))
         else: 
             return [nome_completo, idade, cpf, matricula_coren]
+
+
+    def selecionar(self, enfermeiros):
+        count = 1
+        print("Selecione um enfermeiro")
+        for enfermeiro in enfermeiros:
+            print("Paciente nº: ", count)
+            print("Nome: " + enfermeiro.nome_completo)
+            print("Idade: "+ str(enfermeiro.idade))
+            print("Matricula: "+ str(enfermeiro.matricula))
+            print("--------------------------------\n")
+
+        escolha = self.le_inteiro("-->", range(1, count))
+        return escolha
 
 
