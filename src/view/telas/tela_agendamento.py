@@ -1,5 +1,3 @@
-import os
-
 from abstractView import AbstractView
 
 class AgendamentoView(AbstractView):

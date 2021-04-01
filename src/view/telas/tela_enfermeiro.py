@@ -1,5 +1,3 @@
-import os
-
 from abstractView import AbstractView
 
 class EnfermeiroView(AbstractView):
@@ -16,10 +14,10 @@ class EnfermeiroView(AbstractView):
 
     def incluir(self):
         nome_completo = input("Nome do Enfermeiro:")
-        idade = self.le_inteiro("Idade:")
+        idade = input("Idade:")
         cpf = str(input("Digite o CPF:"))
         try:
-            matricula_coren = self.le_inteiro("Numero de matricula coren:")
+            matricula_coren = input("Numero de matricula coren:")
         except ValueError as e:
             print('\nERRO: Digite um valor valido: {}'.format(e))
         else:
@@ -28,7 +26,7 @@ class EnfermeiroView(AbstractView):
 
     def excluir(self):
         try:
-            matricula_coren = self.le_inteiro("ID do vendedor:")
+            matricula_coren = input("ID do vendedor:")
         except ValueError as e:
             print('\nERRO: Digite um valor valido: {}'.format(e))
         else:    
@@ -46,10 +44,10 @@ class EnfermeiroView(AbstractView):
 
     def atualiza(self):
         nome_completo = input("Nome do Enfermeiro:")
-        idade = self.le_inteiro("Idade:")
+        idade = input("Idade:")
         cpf = input("Digite o cpf:")
         try:
-           matricula_coren = self.le_inteiro("Digite a MATRICULA/COREN:")
+           matricula_coren = input("Digite a MATRICULA/COREN:")
         except ValueError as e:
             print('\nERRO: Digite um valor valido: {}'.format(e))
         else: 
