@@ -1,8 +1,10 @@
 import os
 
-from abstractView import AbstractView
+from view.abstractView import AbstractView
 
 class PacienteView(AbstractView):
+    def __init__(self):
+        pass
 
     def tela_paciente(self):
         print ("\n ---- Cadastro do Paciente ----")
@@ -20,21 +22,20 @@ class PacienteView(AbstractView):
         try:
             cpf = int(input("Número do CPF: "))
             self.clear()
-            return {'nome_completo': nome_completom 'idade':idade, 'cpf':cpf}
-        except ValueError as e:
-            print('\nERRO: Digite um valor valido: {}'.format(e))
+            return {'nome_completo': nome_completo, 'idade':idade, 'cpf':cpf}
+        except ValueError:
+            self.dado_invalido('CPF')
             return self.incluir()
 
     def excluir(self):
         try:
             cpf = int(input("Digite o CPF do paciente para deletar"))
             return cpf
-        except ValueError as e:
-            print('\nERRO: Digite um valor valido: {}'.format(e))
+        except ValueError:
+            self.dado_invalido('CPF')
             return self.excluir()
-
     
-    def listar(self, listagem):
+    def listagem(self, listagem):
         self.clear()
         print("\n Lista de Pacientes:")
         for paciente in listagem:
@@ -43,17 +44,15 @@ class PacienteView(AbstractView):
             print("CPF: "+ str(paciente.cpf))
             print("--------------------------------\n")
 
-
     def atualizar(self):
         nome_completo = input("Nome Completo do Paciente: ")
         idade = input("Idade do Paciente: ")
         try:
             cpf = int(input("CPF do Paciente"))
-            return {'nome_completo': nome_completom 'idade':idade, 'cpf':cpf}
-        except ValueError as e:
+            return {'nome_completo': nome_completo, 'idade':idade, 'cpf':cpf}
+        except ValueError:
             self.dado_invalido('CPF')
             return self.atualizar()
-
 
     def selecionar(self, pacientes):
         count = 1
@@ -67,7 +66,6 @@ class PacienteView(AbstractView):
 
         escolha = self.le_inteiro("-->", range(1, count))
         return escolha
-
 
     def cadastro_sucesso(self):
         print("Paciente cadastrado com sucesso!")

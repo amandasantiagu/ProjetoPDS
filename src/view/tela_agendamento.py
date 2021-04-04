@@ -1,4 +1,4 @@
-from abstractView import AbstractView
+from view.abstractView import AbstractView
 
 class AgendamentoView(AbstractView):
     def __init__(self):
@@ -26,8 +26,12 @@ class AgendamentoView(AbstractView):
         self.clear()
         return {"data":data, "horario":horario}
 
-    
-    def listar(self, listagem):
+    def atualizar(self):
+        data = input("Data de Agendamento: ")
+        horario = input("Horario de Agendamento: ")
+        return {"data":data, "horario":horario}
+
+    def listagem(self, listagem):
         self.clear()
         print("\n Listagem de Agendamentos:")
         for agendamento in listagem:
@@ -37,8 +41,22 @@ class AgendamentoView(AbstractView):
             print("Enfermeiro: " + agendamento.enfermeiro.nome_completo)
             print("Vacina: " + agendamento.vacina)
 
-    def atualiza(self):
-        data = input("Data de Agendamento: ")
-        horario = input("Horario de Agendamento: ")
-        return {"data":data, "horario":horario}
+    def cadastro_sucesso(self):
+        print("Agendamento cadastrado com sucesso!")
+
+    def agendamento_duplicado(self):
+        print("Erro! Agendamento já cadastrado.")
+
+    def relatorio(self, agendamentos):
+        self.clear()
+        print("\n ---- RELATORIO GERAL ------:")
+        print("Data de Agendamentos Marcados: ")
+        print("Horario de Agendamentos Marcados: " )
+        print("Quantidade de Agendamentos Marcados: ")
+        print("Pacientes Agendados: ")
+        print("Quantidade de Pacientes atendidos: ")
+        print("Quantidade de Pacientes com agendamento marcados: ")
+        print("Quantidade de Vacinas Aplicadas: ")
+        print("Quantidade de Pacientes 1 dose Aplicada: ")
+        print("Quantidade de Pacientes 2 dose Aplicada: ")
 

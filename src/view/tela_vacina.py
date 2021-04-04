@@ -1,8 +1,10 @@
-from abstractView import AbstractView
+from view.abstractView import AbstractView
 
 class VacinaView(AbstractView):
+    def __init__(self):
+        pass
 
-    def incluir_ou_atualizar(self):
+    def incluir(self):
         tipo_vacina = input("Tipo da Vacina: ")
         fabricante = input("Fabricante: ")
         try:
@@ -11,4 +13,14 @@ class VacinaView(AbstractView):
         except ValueError:
             print("Valor inválido.")
             self.clear()
-            self.incluir_ou_atualizar()
+            return self.incluir()
+
+    ################ abstract pede para ter isso para ser importado no agendamento
+    def excluir(self):
+        pass
+
+    def atualizar(self):
+        pass
+
+    def listagem(self):
+        pass

@@ -1,16 +1,14 @@
-from telas.abstractView import AbstractView
 
-class TelaSistemaView(AbstractView):
-
+class TelaSistemaView():
     def __init__(self):
-        #inicializa todos os controllers, e chama o método de cada um
+        pass
 
     def menu_principal(self):
-        print ("\n ---- Posto de Saúde ----")
+        print ("\n ---- Posto de Saúde Moreira & Santiago ----")
         print ("1 - Cadastro do Paciente")
         print ("2 - Cadastro do Enfermeiro")
         print ("3 - Agendamentos")
-        print ("5 - Gerar Relatorio Geral")
+        print ("4 - Gerar Relatório Geral")
         print ("0 - Sair")
-        opcao = self.le_inteiro("-->", range(5))
+        opcao = int(input('Digite uma opção: ')) ###Por try depois
         return opcao
