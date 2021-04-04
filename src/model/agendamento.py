@@ -1,3 +1,7 @@
+from model.paciente import Paciente
+from model.enfermeiro import Enfermeiro
+from model.vacina import Vacina
+
 class Agendamento():
     def __init__(self, data: str,
                  horario: str,
