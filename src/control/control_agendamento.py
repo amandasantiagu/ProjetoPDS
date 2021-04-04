@@ -2,10 +2,10 @@ from model.paciente import Paciente
 from model.agendamento import Agendamento
 from model.enfermeiro import Enfermeiro
 from model.vacina import Vacina
-from view.telas.tela_agendamento import AgendamentoView
-from view.telas.tela_vacina import VacinaView
-from view.telas.tela_paciente import PacienteView
-from view.telas.tela_enfermeiro import EnfermeiroView
+from view.tela_agendamento import AgendamentoView
+from view.tela_vacina import VacinaView
+from view.tela_paciente import PacienteView
+from view.tela_enfermeiro import EnfermeiroView
 
 
 class AgendamentoController():
@@ -18,45 +18,58 @@ class AgendamentoController():
         self.__enfermeiro_controller = enf_controller
         self.__paciente_controller = pac_controller
 
-
-
     def option(self):
-        escolha = self.__view.tela_agendamento()
+        escolha = self.__agendamento_view.tela_agendamento()
         options = {
-                1: incluir,
-                2: excluir,
-                3: atualiza,
-                4: listagem,
-                0: self.clear,
+                1: self.incluir,
+                2: self.excluir,
+                3: self.atualizar,
+                4: self.listagem,
+                0: self.sair,
                 }
+        function = options[escolha]
+        function()
 
 
     def incluir(self) -> Agendamento:
-        dados = self.__view.incluir()
+        dados = self.__agendamento_view.incluir()
         data = dados['data']
         horario = dados['horario']
-        paciente = self.__enfermeiro_view.selecionar(self.enf_controller.pacientes)
+        paciente = self.__paciente_view.selecionar(self.__paciente_controller.pacientes)
         enfermeiro = self.__enfermeiro_view.selecionar(self.__enfermeiro_controller.enfermeiros)
         vacina = self.__vacina_view.incluir()
-        agendamento = Agendamento(data, horario, posto, vacina, enfermeiro, paciente)
+        agendamento = Agendamento(data, horario, vacina, enfermeiro, paciente)
         for ag in self.__agendamentos:
             if ag.data == data and ag.paciente == paciente:
-                self.__view.agendamento_duplicado()
+                self.__agendamento_view.agendamento_duplicado()
                 return
-        if agendamento.idade < 0:
-            self.__view.dado_invalido("Idade")
         self.__agendamentos.append(agendamento)
-        self.__view.cadastro_sucesso()
-
-    def listagem(self):
-        self.__view.listagem(self.agendamentos) 
-
+        self.__agendamento_view.cadastro_sucesso()
 
     def excluir(self):
-        dados = self.__view.excluir()
+        dados = self.__agendamento_view.excluir()
         for agendamento in self.__agendamentos:
             if agendamento.data == dados['data'] and agendamento.horario == dados['horario']:
                 self.__agendamentos.remove(agendamento)
                 return
 
+    ########### EM DUVIDA DE COMO ACESSAR MEU PACIENTE/ENFERMEIRO P EDITAR
+    def atualizar(self):
+        dados = self.__agendamento_view.atualizar()
+        for agendamento in self.__agendamentos:
+            if agendamento.data == dados['data']:
+                agendamento.horario = dados['horario']
+                agendamento.paciente = dados['paciente']
+                agendamento.enfermeiro = dados['enfermeiro']
+                agendamento.vacina = dados['vacina']
+
+    def listagem(self):
+        self.__agendamento_view.listagem(self.__agendamentos)
+
+    def sair(self):
+        return
+
+    ###fazer listagem
+    def relatorio(self):
+        self.__agendamento_view.relatorio(self.__agendamentos)
 

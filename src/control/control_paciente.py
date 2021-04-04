@@ -1,31 +1,32 @@
 from model.paciente import Paciente
-from view.telas.tela_paciente import PacienteView
-from view.telas.tela_endereco import EnderecoView
+from view.tela_paciente import PacienteView
+from view.tela_endereco import EnderecoView
 
 
 class PacienteController():
     def __init__(self):
         self.__pacientes = []
         self.__view = PacienteView()
-
+        self.__endereco_view = EnderecoView()
 
     def option(self):
         escolha = self.__view.tela_paciente()
         options = {
-                1: incluir,
-                2: excluir,
-                3: atualiza,
-                4: listagem,
-                0: self.clear,
+                1: self.incluir,
+                2: self.excluir,
+                3: self.atualizar,
+                4: self.listagem,
+                0: self.sair,
                 }
-
+        function = options[escolha]
+        function()
 
     def incluir(self) -> Paciente:
         dados = self.__view.incluir()
         nome = dados['nome_completo']
         cpf = dados['cpf']
         idade = dados['idade']
-        endereco = TelaEndereco().novo()
+        endereco = self.__endereco_view.novo()
         paciente = Paciente(nome, cpf, idade)
         paciente.endereco = endereco
         for paciente in self.__pacientes:
@@ -40,8 +41,8 @@ class PacienteController():
     def listagem(self):
         self.__view.listagem(self.pacientes) 
 
-    def atualiza(self):
-        dados = self.__view.atualiza()
+    def atualizar(self):
+        dados = self.__view.atualizar()
         for paciente in self.pacientes:
             if paciente.cpf == dados['cpf']:
                 paciente.nome_completo = dados['nome_completo']
@@ -53,7 +54,8 @@ class PacienteController():
             if paciente.cpf == cpf:
                 self.__pacientes.remove(paciente)
                 return
-
+    def sair(self):
+        return
 
     @property
     def pacientes(self):
