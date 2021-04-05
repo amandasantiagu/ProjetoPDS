@@ -27,9 +27,9 @@ class EnfermeiroController():
         nome = dados['nome_completo']
         idade = dados['idade']
         matricula_coren = dados['matricula_coren']
-        #endereco = self.__endereco_view.novo()
+        endereco = self.__endereco_view.novo()
         novo_enfermeiro = Enfermeiro(nome, idade, matricula_coren)
-        #enfermeiro.endereco = endereco
+        novo_enfermeiro.endereco = endereco
         for enfermeiro in self.__enfermeiros:
             if enfermeiro.matricula_coren == matricula_coren:
                 self.__view.enfermeiro_duplicado()

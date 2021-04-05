@@ -27,9 +27,9 @@ class PacienteController():
         nome = dados['nome_completo']
         idade = dados['idade']
         cpf = dados['cpf']
-        ##endereco = self.__endereco_view.novo()
+        endereco = self.__endereco_view.novo()
         novo_paciente = Paciente(nome, idade, cpf)
-        ##paciente.endereco = endereco
+        novo_paciente.endereco = endereco
         for paciente in self.__pacientes:
             if paciente.cpf == cpf:
                 self.__view.paciente_duplicado()
