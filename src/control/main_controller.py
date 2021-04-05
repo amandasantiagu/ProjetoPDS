@@ -8,8 +8,8 @@ from ..view.tela_sistema import TelaSistemaView
 class MainController:
 
     def __init__(self):
-        self.__posto = None
-        self.__view = TelaSistemaView()
+        self.__posto = PostoController().incluir()
+        self.__view = TelaSistemaView(self.__posto)
         self.__controller_paciente = PacienteController()
         self.__controller_enfermeiro = EnfermeiroController()
         self.__controller_agendamentos = AgendamentoController(self.__posto, self.__controller_paciente, self.__controller_enfermeiro)
@@ -18,8 +18,6 @@ class MainController:
     def run(self):
         escolha = 'x'
         while escolha != 0:
-            if self.primeiro_posto():
-                self.__posto = PostoController().incluir()
 
             opcoes = {
                     1: self.__controller_paciente.option,
@@ -35,9 +33,6 @@ class MainController:
                 print('Opção inválida. Tente novamente.')
                 continue
 
-    
-    def primeiro_posto(self):
-        return self.__posto is None
     
     def sair(self):
         exit()
