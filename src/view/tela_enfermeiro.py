@@ -59,17 +59,17 @@ class EnfermeiroView(AbstractView):
 
     def selecionar(self, enfermeiros):
         count = 1
-        print(enfermeiros)
         print("Selecione um enfermeiro")
         for enfermeiro in enfermeiros:
             print("Enfermeiro nº: ", count)
             print("Nome: " + enfermeiro.nome_completo)
             print("Idade: "+ str(enfermeiro.idade))
-            print("Matricula: "+ str(enfermeiro.matricula))
+            print("Matricula: "+ str(enfermeiro.matricula_coren))
             print("--------------------------------\n")
+            count += 1
 
-        escolha = self.le_inteiro("-->", range(1, count))
-        return escolha
+        escolha = self.le_inteiro("-->", opcoes = range(1, count))
+        return enfermeiros[escolha - 1]
 
     def cadastro_sucesso(self):
         print("------- Enfermeiro cadastrado com sucesso! -------")

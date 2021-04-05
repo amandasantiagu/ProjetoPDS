@@ -7,7 +7,11 @@ class AbstractView(ABC):
         os.system('cls' if os.name=='nt' else 'clear')
 
 
-    def le_inteiro(self, msg: str = "", opcoes = []):
+    def le_inteiro(self, msg: str = "", opcoes = None):
+        if opcoes is None:
+            opcoes = []
+        else:
+            opcoes = list(opcoes)
         while True:
             value = input(msg)
             try:

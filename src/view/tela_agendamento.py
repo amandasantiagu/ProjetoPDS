@@ -33,9 +33,10 @@ class AgendamentoView(AbstractView):
         self.clear()
         print("\n Listagem de Agendamentos:")
         for agendamento in listagem:
+            print(agendamento.paciente)
             print("Data: " + agendamento.data)
             print("Horario: " + agendamento.horario)
-            print("paciente: " + agendamento.paciente.nome_completo)
+            print("Paciente: " + agendamento.paciente.nome_completo)
             print("Enfermeiro: " + agendamento.enfermeiro.nome_completo)
             print("Vacina: " + agendamento.vacina)
 

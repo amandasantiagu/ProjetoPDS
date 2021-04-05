@@ -70,7 +70,6 @@ class AgendamentoController():
     def sair(self):
         return
 
-    ###fazer listagem
-    def relatorio(self):
-        self.__agendamento_view.relatorio(self.__agendamentos)
-
+    @property
+    def agendamentos(self):
+        return self.__agendamentos

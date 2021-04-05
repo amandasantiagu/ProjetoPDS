@@ -58,7 +58,6 @@ class PacienteView(AbstractView):
 
     def selecionar(self, pacientes):
         count = 1
-        print(pacientes)
         print("Selecione um paciente")
         for paciente in pacientes:
             print("Paciente nº: ", count)
@@ -66,9 +65,10 @@ class PacienteView(AbstractView):
             print("Idade: "+ str(paciente.idade))
             print("CPF: "+ str(paciente.cpf))
             print("--------------------------------\n")
+            count += 1
 
-        escolha = self.le_inteiro("-->", range(1, count))
-        return escolha
+        escolha = self.le_inteiro("-->", opcoes = range(1, count))
+        return pacientes[escolha - 1]
 
     def cadastro_sucesso(self):
         print("------- Paciente cadastrado com sucesso! -------")

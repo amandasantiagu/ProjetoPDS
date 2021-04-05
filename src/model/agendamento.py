@@ -50,3 +50,12 @@ class Agendamento():
         self.__paciente = paciente
 
 
+    @property
+    def vacina(self):
+        return self.__vacina
+
+    @vacina.setter
+    def vacina(self, vacina):
+        self.__vacina = vacina
+
+
