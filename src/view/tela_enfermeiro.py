@@ -10,16 +10,16 @@ class EnfermeiroView(AbstractView):
         print ("1 - Incluir Enfermeiro")
         print ("2 - Excluir Enfermeiro")
         print ("3 - Alterações no Cadastro")
-        print ("4 - Listagem de Enfermeiros por matricula")
+        print ("4 - Listagem de Enfermeiros")
         print ("0 - Sair")
         opcao = self.le_inteiro('Digite uma opção: ', [1, 2, 3, 4, 0])
         return opcao
 
     def incluir(self):
+        self.clear()
         nome_completo = input("Nome do Enfermeiro: ")
-        lista = range(1, 150)
-        idade = self.le_inteiro("Idade: ", lista)
         try:
+            idade = int(input("Idade: "))
             matricula_coren = int(input("Numero de matricula coren: "))
             return {'nome_completo': nome_completo, 'idade':idade, 'matricula_coren':matricula_coren}
         except ValueError:
@@ -27,6 +27,7 @@ class EnfermeiroView(AbstractView):
             return self.incluir()
 
     def excluir(self):
+        self.clear()
         try:
             matricula_coren = int(input("Digite a matricula/COREN: "))
         except ValueError:
@@ -36,21 +37,24 @@ class EnfermeiroView(AbstractView):
     
     def listagem(self, listagem):
         self.clear()
-        print("\n Lista de Enfermeiros:")
+        print("\n Listagem de Enfermeiros:")
         for enfermeiro in listagem:
             print("Nome: " + enfermeiro.nome_completo)
             print("Idade: "+ str(enfermeiro.idade))
-            print("Matricula/COREN: " + enfermeiro.matricula_coren)
+            print("Matricula/COREN: " + str(enfermeiro.matricula_coren))
+            print("------------------")
 
     def atualizar(self):
+        self.clear()
+        print("\n Para atualizar a Matricula deve estar correta")
         nome_completo = input("Nome do Enfermeiro: ")
         idade = self.le_inteiro("Idade: ", range(1, 150))
         try:
-           matricula_coren = input("Digite a MATRICULA/COREN: ")
+           matricula_coren = int(input("Digite a MATRICULA/COREN para EXCLUIR: "))
            return {'nome_completo': nome_completo, 'idade':idade, 'matricula_coren': matricula_coren}
         except ValueError:
             self.dado_invalido('matricula_coren')
-            return self.atualizar()
+            return
 
 
     def selecionar(self, enfermeiros):
@@ -68,10 +72,16 @@ class EnfermeiroView(AbstractView):
         return escolha
 
     def cadastro_sucesso(self):
-        print("Enfermeiro cadastrado com sucesso!")
+        print("------- Enfermeiro cadastrado com sucesso! -------")
 
     def enfermeiro_duplicado(self):
         print("Erro! Enfermeiro já cadastrado.")
 
     def dado_invalido(self, dado_str):
         print("Erro! Dado inválido: ", dado_str)
+
+    def sucesso_atualizar(self):
+        print("------- Atualizado com Sucesso. -------")
+    
+    def sucesso_excluir(self):
+        print("------- Excluido com Sucesso. -------")
