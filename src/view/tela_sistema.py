@@ -3,7 +3,6 @@ class TelaSistemaView:
 
     def __init__(self, posto):
         self.__posto = posto
-        self.menu_principal()
 
     def menu_principal(self):
         txt = "\n ---- Posto de Saúde {nome}----"
