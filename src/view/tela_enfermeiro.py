@@ -52,7 +52,7 @@ class EnfermeiroView(AbstractView):
             self.dado_invalido('matricula_coren')
             return self.atualizar()
 
-############# NAO ENTENDI AQUI, TEMOS LISTAGEM + SELECIONAR E NO CONTROLLER N TEMOS SELECIONAR (????????)
+
     def selecionar(self, enfermeiros):
         count = 1
         print("Selecione um enfermeiro")

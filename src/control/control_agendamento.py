@@ -9,12 +9,13 @@ from view.tela_enfermeiro import EnfermeiroView
 
 
 class AgendamentoController():
-    def __init__(self, enf_controller, pac_controller):
+    def __init__(self, posto, enf_controller, pac_controller):
         self.__agendamentos = []
         self.__agendamento_view = AgendamentoView()
         self.__vacina_view = VacinaView()
         self.__paciente_view = PacienteView()
         self.__enfermeiro_view = EnfermeiroView()
+        self.__posto = posto
         self.__enfermeiro_controller = enf_controller
         self.__paciente_controller = pac_controller
 
@@ -38,7 +39,7 @@ class AgendamentoController():
         paciente = self.__paciente_view.selecionar(self.__paciente_controller.pacientes)
         enfermeiro = self.__enfermeiro_view.selecionar(self.__enfermeiro_controller.enfermeiros)
         vacina = self.__vacina_view.incluir()
-        agendamento = Agendamento(data, horario, vacina, enfermeiro, paciente)
+        agendamento = Agendamento(data, horario, vacina, self.__posto, enfermeiro, paciente)
         for ag in self.__agendamentos:
             if ag.data == data and ag.paciente == paciente:
                 self.__agendamento_view.agendamento_duplicado()
