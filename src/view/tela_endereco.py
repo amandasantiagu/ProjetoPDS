@@ -1,10 +1,6 @@
-
-from model.endereco import Endereco
+from ..model.endereco import Endereco
 
 class EnderecoView():
-
-    def __init__(self):
-        pass
 
     def novo(self):
         rua = input("Nome da Rua: ")

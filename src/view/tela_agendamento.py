@@ -1,8 +1,6 @@
-from view.abstractView import AbstractView
+from .abstractView import AbstractView
 
 class AgendamentoView(AbstractView):
-    def __init__(self):
-        pass
 
     def tela_agendamento(self):
         print ("\n ---- Cadastro de Agendamentos ----")

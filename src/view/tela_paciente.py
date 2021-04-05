@@ -1,6 +1,6 @@
 import os
 
-from view.abstractView import AbstractView
+from .abstractView import AbstractView
 
 class PacienteView(AbstractView):
     def __init__(self):
@@ -18,7 +18,7 @@ class PacienteView(AbstractView):
 
     def incluir(self):
         nome_completo = input("Nome Completo do Paciente: ")
-        idade = input("Idade: ")
+        idade = self.le_inteiro("Idade: ", range(1, 150))
         try:
             cpf = int(input("Número do CPF: "))
             self.clear()
@@ -46,7 +46,7 @@ class PacienteView(AbstractView):
 
     def atualizar(self):
         nome_completo = input("Nome Completo do Paciente: ")
-        idade = input("Idade do Paciente: ")
+        idade = self.le_inteiro("Idade: ", range(1, 150))
         try:
             cpf = int(input("CPF do Paciente"))
             return {'nome_completo': nome_completo, 'idade':idade, 'cpf':cpf}

@@ -2,9 +2,6 @@ import os
 from abc import ABC, abstractmethod
 
 class AbstractView(ABC):
-    @abstractmethod
-    def __init__(self):
-        pass
 
     def clear(self):
         lambda: os.system('cls' if os.name=='nt' else 'clear')

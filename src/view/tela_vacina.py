@@ -1,4 +1,4 @@
-from view.abstractView import AbstractView
+from .abstractView import AbstractView
 
 class VacinaView(AbstractView):
     def __init__(self):

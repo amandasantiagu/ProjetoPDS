@@ -1,4 +1,4 @@
-from view.abstractView import AbstractView
+from .abstractView import AbstractView
 
 class EnfermeiroView(AbstractView):
 
@@ -17,7 +17,7 @@ class EnfermeiroView(AbstractView):
 
     def incluir(self):
         nome_completo = input("Nome do Enfermeiro: ")
-        idade = input("Idade: ")
+        idade = self.le_inteiro("Idade: ", range(1, 150))
         try:
             matricula_coren = int(input("Numero de matricula coren: "))
             self.clear()
@@ -44,7 +44,7 @@ class EnfermeiroView(AbstractView):
 
     def atualizar(self):
         nome_completo = input("Nome do Enfermeiro: ")
-        idade = input("Idade: ")
+        idade = self.le_inteiro("Idade: ", range(1, 150))
         try:
            matricula_coren = input("Digite a MATRICULA/COREN: ")
            return {'nome_completo': nome_completo, 'idade':idade, 'matricula_coren': matricula_coren}
