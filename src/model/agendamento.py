@@ -1,16 +1,19 @@
 from model.paciente import Paciente
 from model.enfermeiro import Enfermeiro
 from model.vacina import Vacina
+from model.posto import Posto
 
 class Agendamento():
     def __init__(self, data: str,
                  horario: str,
                  vacina: Vacina,
+                 posto: Posto,
                  enfermeiro: Enfermeiro = None,
                  paciente: Paciente = None):
         self.__data = data
         self.__horario = horario
         self.__vacina = vacina
+        self.__posto = posto
         self.__enfermeiro = enfermeiro
         self.__paciente = paciente
 
