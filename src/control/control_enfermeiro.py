@@ -35,6 +35,7 @@ class EnfermeiroController():
                 return
         if enfermeiro.idade < 0 and enfermeiro.idade >= 180:
             self.__view.dado_invalido("Idade")
+            return self.incluir()
         self.__enfermeiros.append(enfermeiro)
         self.__view.cadastro_sucesso()
 

@@ -27,7 +27,11 @@ class MainController:
                     0: self.sair,
                     }
             escolha = self.__view.menu_principal()
-            opcoes[escolha]() 
+            try:
+                opcoes[escolha]() 
+            except [ValueError, KeyError]:
+                print('Opção inválida. Tente novamente.')
+                continue
 
     
     def incluir_paciente(self):

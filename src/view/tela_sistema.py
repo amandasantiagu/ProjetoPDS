@@ -1,7 +1,5 @@
 
 class TelaSistemaView():
-    def __init__(self):
-        pass
 
     def menu_principal(self):
         print ("\n ---- Posto de Saúde Moreira & Santiago ----")

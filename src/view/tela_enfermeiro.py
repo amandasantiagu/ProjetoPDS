@@ -17,10 +17,10 @@ class EnfermeiroView(AbstractView):
 
     def incluir(self):
         nome_completo = input("Nome do Enfermeiro: ")
-        idade = self.le_inteiro("Idade: ", range(1, 150))
+        lista = range(1, 150)
+        idade = self.le_inteiro("Idade: ", lista)
         try:
             matricula_coren = int(input("Numero de matricula coren: "))
-            self.clear()
             return {'nome_completo': nome_completo, 'idade':idade, 'matricula_coren':matricula_coren}
         except ValueError:
             self.dado_invalido('matricula_coren')
@@ -55,6 +55,7 @@ class EnfermeiroView(AbstractView):
 
     def selecionar(self, enfermeiros):
         count = 1
+        print(enfermeiros)
         print("Selecione um enfermeiro")
         for enfermeiro in enfermeiros:
             print("Enfermeiro nº: ", count)

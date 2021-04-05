@@ -32,7 +32,7 @@ class PacienteController():
         for paciente in self.__pacientes:
             if paciente.cpf == cpf:
                 self.__view.paciente_duplicado()
-                return
+                return self.incluir()
         self.__pacientes.append(paciente)
         self.__view.cadastro_sucesso()
 

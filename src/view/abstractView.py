@@ -4,7 +4,8 @@ from abc import ABC, abstractmethod
 class AbstractView(ABC):
 
     def clear(self):
-        lambda: os.system('cls' if os.name=='nt' else 'clear')
+        os.system('cls' if os.name=='nt' else 'clear')
+
 
     def le_inteiro(self, msg: str = "", opcoes = []):
         while True:

@@ -21,7 +21,6 @@ class PacienteView(AbstractView):
         idade = self.le_inteiro("Idade: ", range(1, 150))
         try:
             cpf = int(input("Número do CPF: "))
-            self.clear()
             return {'nome_completo': nome_completo, 'idade':idade, 'cpf':cpf}
         except ValueError:
             self.dado_invalido('CPF')
@@ -56,6 +55,7 @@ class PacienteView(AbstractView):
 
     def selecionar(self, pacientes):
         count = 1
+        print(pacientes)
         print("Selecione um paciente")
         for paciente in pacientes:
             print("Paciente nº: ", count)
