@@ -1,11 +1,11 @@
-from model.paciente import Paciente
-from model.agendamento import Agendamento
-from model.enfermeiro import Enfermeiro
-from model.vacina import Vacina
-from view.tela_agendamento import AgendamentoView
-from view.tela_vacina import VacinaView
-from view.tela_paciente import PacienteView
-from view.tela_enfermeiro import EnfermeiroView
+from ..model.paciente import Paciente
+from ..model.agendamento import Agendamento
+from ..model.enfermeiro import Enfermeiro
+from ..model.vacina import Vacina
+from ..view.tela_agendamento import AgendamentoView
+from ..view.tela_vacina import VacinaView
+from ..view.tela_paciente import PacienteView
+from ..view.tela_enfermeiro import EnfermeiroView
 
 
 class AgendamentoController():

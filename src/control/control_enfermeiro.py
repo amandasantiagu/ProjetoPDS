@@ -1,6 +1,6 @@
-from model.enfermeiro import Enfermeiro
-from view.tela_enfermeiro import EnfermeiroView
-from view.tela_endereco import EnderecoView
+from ..model.enfermeiro import Enfermeiro
+from ..view.tela_enfermeiro import EnfermeiroView
+from ..view.tela_endereco import EnderecoView
 
 
 class EnfermeiroController():

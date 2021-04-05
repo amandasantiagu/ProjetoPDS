@@ -1,6 +1,6 @@
-from model.paciente import Paciente
-from view.tela_paciente import PacienteView
-from view.tela_endereco import EnderecoView
+from ..model.paciente import Paciente
+from ..view.tela_paciente import PacienteView
+from ..view.tela_endereco import EnderecoView
 
 
 class PacienteController():
@@ -54,8 +54,6 @@ class PacienteController():
             if paciente.cpf == cpf:
                 self.__pacientes.remove(paciente)
                 return
-    def sair(self):
-        return
 
     @property
     def pacientes(self):
