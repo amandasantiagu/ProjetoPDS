@@ -9,7 +9,7 @@ from ..view.tela_enfermeiro import EnfermeiroView
 
 
 class AgendamentoController():
-    def __init__(self, posto, enf_controller, pac_controller):
+    def __init__(self, posto, pac_controller, enf_controller):
         self.__agendamentos = []
         self.__agendamento_view = AgendamentoView()
         self.__vacina_view = VacinaView()

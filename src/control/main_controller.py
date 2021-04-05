@@ -10,26 +10,32 @@ class MainController:
         self.__posto = None
 
     def run(self):
-        if self.primeiro_posto():
-            self.__posto = PostoController().incluir()
+        escolha = 'x'
+        while escolha != 0:
+            if self.primeiro_posto():
+                self.__posto = PostoController().incluir()
 
-        self.__view = TelaSistemaView()
-        self.__controller_paciente = PacienteController()
-        self.__controller_enfermeiro = EnfermeiroController()
-        self.__controller_agendamentos = AgendamentoController(self.__posto, self.__controller_paciente, self.__controller_enfermeiro)
-        opcoes = {
-                1: self.__controller_paciente.incluir,
-                2: self.__controller_enfermeiro.incluir,
-                3: self.__controller_agendamentos.incluir,
-                4: self.__controller_agendamentos.relatorio,
-                0: self.sair,
-                }
-        escolha = self.__view.menu_principal()
-        opcoes[escolha]() 
+            self.__view = TelaSistemaView()
+            self.__controller_paciente = PacienteController()
+            self.__controller_enfermeiro = EnfermeiroController()
+            self.__controller_agendamentos = AgendamentoController(self.__posto, self.__controller_paciente, self.__controller_enfermeiro)
+            opcoes = {
+                    1: self.incluir_paciente,
+                    2: self.__controller_enfermeiro.incluir,
+                    3: self.__controller_agendamentos.incluir,
+                    4: self.__controller_agendamentos.relatorio,
+                    0: self.sair,
+                    }
+            escolha = self.__view.menu_principal()
+            opcoes[escolha]() 
 
-    def sair(self):
-        return
+    
+    def incluir_paciente(self):
+        return self.__controller_paciente.incluir()
 
 
     def primeiro_posto(self):
         return self.__posto is None
+
+    def sair(self):
+        exit()

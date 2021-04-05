@@ -33,8 +33,6 @@ class PacienteController():
             if paciente.cpf == cpf:
                 self.__view.paciente_duplicado()
                 return
-        if paciente.idade < 0:
-            self.__view.dado_invalido("Idade")
         self.__pacientes.append(paciente)
         self.__view.cadastro_sucesso()
 
