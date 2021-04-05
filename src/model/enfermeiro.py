@@ -1,4 +1,4 @@
-from model.pessoa import Pessoa
+from .pessoa import Pessoa
 class Enfermeiro(Pessoa):
 
     def __init__(self, nome_completo, idade, matricula_coren):

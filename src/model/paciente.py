@@ -1,5 +1,4 @@
-
-from model.pessoa import Pessoa
+from .pessoa import Pessoa
 
 class Paciente(Pessoa):
     def __init__(self, nome_completo, idade, cpf):

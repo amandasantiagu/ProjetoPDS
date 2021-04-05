@@ -1,7 +1,7 @@
-from model.paciente import Paciente
-from model.enfermeiro import Enfermeiro
-from model.vacina import Vacina
-from model.posto import Posto
+from .paciente import Paciente
+from .enfermeiro import Enfermeiro
+from .vacina import Vacina
+from .posto import Posto
 
 class Agendamento():
     def __init__(self, data: str,

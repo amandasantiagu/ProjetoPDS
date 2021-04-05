@@ -1,5 +1,9 @@
 from enum import Enum
 
+class DoseVacina(Enum):
+    PRIMEIRA = 1
+    SEGUNDA = 2
+
 class Vacina():
     def __init__(self, tipo_vacina: str, fabricante: str, dose: DoseVacina = DoseVacina.PRIMEIRA):
         self.__tipo_vacina = tipo_vacina
@@ -23,6 +27,3 @@ class Vacina():
         self.__fabricante = fabricante
 
 
-class DoseVacina(Enum):
-    PRIMEIRA = 1
-    SEGUNDA = 2
