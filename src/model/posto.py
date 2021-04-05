@@ -6,7 +6,7 @@ class Posto:
 
 
     @property
-    def total_doses():
+    def total_doses(self):
         return self.__total_doses
 
 
@@ -15,5 +15,5 @@ class Posto:
         return self.__nome
 
 
-    def novas_doses(num):
-        total_doses = total_doses + num
+    def novas_doses(self, num):
+        self.__total_doses = self.__total_doses + num
