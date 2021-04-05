@@ -8,5 +8,8 @@ class TelaSistemaView():
         print ("3 - Agendamentos")
         print ("4 - Gerar Relatório Geral")
         print ("0 - Sair")
-        opcao = int(input('Digite uma opção: ')) ###Por try depois
-        return opcao
+        try:
+            opcao = int(input('Digite uma opção: '))
+            return opcao
+        except ValueError as e:
+            print('Dado Invalido, digite novamente.{}'.format(e))

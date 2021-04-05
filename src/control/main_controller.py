@@ -20,16 +20,16 @@ class MainController:
             self.__controller_enfermeiro = EnfermeiroController()
             self.__controller_agendamentos = AgendamentoController(self.__posto, self.__controller_paciente, self.__controller_enfermeiro)
             opcoes = {
-                    1: self.incluir_paciente,
-                    2: self.__controller_enfermeiro.incluir,
-                    3: self.__controller_agendamentos.incluir,
+                    1: self.__controller_paciente.option,
+                    2: self.__controller_enfermeiro.option,
+                    3: self.__controller_agendamentos.option,
                     4: self.__controller_agendamentos.relatorio,
-                    0: self.sair,
+                    0: self.sair
                     }
             escolha = self.__view.menu_principal()
             try:
                 opcoes[escolha]() 
-            except [ValueError, KeyError]:
+            except KeyError:
                 print('Opção inválida. Tente novamente.')
                 continue
 
@@ -40,6 +40,7 @@ class MainController:
 
     def primeiro_posto(self):
         return self.__posto is None
-
+    
     def sair(self):
         exit()
+
