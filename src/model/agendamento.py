@@ -4,7 +4,9 @@ from .vacina import Vacina
 from .posto import Posto
 
 class Agendamento():
-    def __init__(self, data: str,
+    def __init__(self, 
+                 id: int,
+                 data: str,
                  horario: str,
                  vacina: Vacina,
                  posto: Posto,
@@ -16,6 +18,17 @@ class Agendamento():
         self.__posto = posto
         self.__enfermeiro = enfermeiro
         self.__paciente = paciente
+
+
+    @property
+    def id(self):
+        return self.__id
+
+
+    @id.setter
+    def id(self, id):
+        self.__id = id
+
 
     @property
     def data(self):
