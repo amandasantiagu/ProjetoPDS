@@ -29,7 +29,7 @@ class AbstractDAO(ABC):
         try:
             return self.__cache[key]
         except KeyError:
-            pass
+            return None
 
     # remove o objeto do dicionario e atualiza o arquivo
     def remove(self, key):
