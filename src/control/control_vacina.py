@@ -24,7 +24,7 @@ class VacinaController():
         dados = self.__view.incluir()
         tipo_vacina = dados['tipo_vacina']
         fabricante = dados['fabricante']
-        num_id = dados['cpf']
+        num_id = dados['num_id']
         nova_vacina = Vacina(dados, tipo_vacina, num_id)
         for vacina in self.__vacina:
             if vacina.num_id == num_id:

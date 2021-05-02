@@ -2,6 +2,7 @@ from ..model.paciente import Paciente
 from ..model.agendamento import Agendamento
 from ..model.enfermeiro import Enfermeiro
 from ..model.vacina import Vacina
+from ..model.persistence.agendamentoDAO import AgendamentoDAO
 from ..view.tela_agendamento import AgendamentoView
 from ..view.tela_vacina import VacinaView
 from ..view.tela_paciente import PacienteView
@@ -10,7 +11,7 @@ from ..view.tela_enfermeiro import EnfermeiroView
 
 class AgendamentoController():
     def __init__(self, posto, pac_controller, enf_controller):
-        self.__agendamentos = []
+        self.__dao = AgendamentoDAO()
         self.__agendamento_view = AgendamentoView()
         self.__vacina_view = VacinaView()
         self.__paciente_view = PacienteView()
@@ -40,36 +41,31 @@ class AgendamentoController():
         enfermeiro = self.__enfermeiro_view.selecionar(self.__enfermeiro_controller.enfermeiros)
         vacina = self.__vacina_view.incluir()
         agendamento = Agendamento(data, horario, vacina, self.__posto, enfermeiro, paciente)
-        for ag in self.__agendamentos:
+        for ag in self.__dao.get_all():
             if ag.data == data and ag.paciente == paciente:
                 self.__agendamento_view.agendamento_duplicado()
                 return
-        self.__agendamentos.append(agendamento)
+        self.__dao.add(agendamento)
         self.__agendamento_view.cadastro_sucesso()
 
     def excluir(self):
         dados = self.__agendamento_view.excluir()
-        for agendamento in self.__agendamentos:
+        for agendamento in self.__dao.get_all():
             if agendamento.data == dados['data'] and agendamento.horario == dados['horario']:
-                self.__agendamentos.remove(agendamento)
+                self.__dao.remove(agendamento.id)
                 return
 
     ########### EM DUVIDA DE COMO ACESSAR MEU PACIENTE/ENFERMEIRO P EDITAR
-    def atualizar(self):
-        dados = self.__agendamento_view.atualizar()
-        for agendamento in self.__agendamentos:
-            if agendamento.data == dados['data']:
-                agendamento.horario = dados['horario']
-                agendamento.paciente = dados['paciente']
-                agendamento.enfermeiro = dados['enfermeiro']
-                agendamento.vacina = dados['vacina']
+    def atualizar(self, agendamento):
+        dados = self.__agendamento_view.atualizar(agendamento)
+        self.__dao.update(agendamento, agendamento.id)
 
     def listagem(self):
-        self.__agendamento_view.listagem(self.__agendamentos)
+        self.__agendamento_view.listagem(self.__dao.get_all())
 
     def sair(self):
         return
 
     @property
     def agendamentos(self):
-        return self.__agendamentos
+        return self.__dao.get_all()
