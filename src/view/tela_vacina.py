@@ -17,23 +17,15 @@ class VacinaView(AbstractView):
     def incluir(self):
         tipo_vacina = input("Tipo da Vacina: ")
         fabricante = input("Fabricante: ")
-        try:
-            num_id = int(input("Número do ID: "))
-            return {"tipo_vacina":tipo_vacina,"fabricante":fabricante, "num_id": num_id}
-        except ValueError:
-            print("Valor inválido.")
-            self.clear()
-            return self.incluir()
+        return {"tipo_vacina":tipo_vacina,"fabricante":fabricante}
 
     def excluir(self):
         try:
             num_id = int(input("Digite numero do ID para EXCLUIR: "))
             return num_id
-
         except ValueError:
             self.dado_invalido('ID')
-        else:    
-            return num_id
+            self.excluir()
 
     def atualizar(self):
         self.clear()
@@ -69,3 +61,4 @@ class VacinaView(AbstractView):
 
     def sucesso_excluir(self):
         print("------- Excluido com Sucesso -------.")
+

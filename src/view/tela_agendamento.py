@@ -24,7 +24,9 @@ class AgendamentoView(AbstractView):
         self.clear()
         return {"data":data, "horario":horario}
 
-    def atualizar(self):
+# TODO atualizar pra utilizar a gui
+    def atualizar(self, agendamento):
+        # pegar dados de enf, paciente e os caraio a partir do agendamento obj
         data = input("Data de Agendamento: ")
         horario = input("Horario de Agendamento: ")
         return {"data":data, "horario":horario}
