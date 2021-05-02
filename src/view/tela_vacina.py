@@ -17,7 +17,8 @@ class VacinaView(AbstractView):
     def incluir(self):
         tipo_vacina = input("Tipo da Vacina: ")
         fabricante = input("Fabricante: ")
-        return {"tipo_vacina":tipo_vacina,"fabricante":fabricante}
+        dose = input("Dose: ")
+        return {"tipo_vacina":tipo_vacina,"fabricante":fabricante, 'dose':dose}
 
     def excluir(self):
         try:

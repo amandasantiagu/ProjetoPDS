@@ -40,7 +40,7 @@ class AgendamentoController():
         paciente = self.__paciente_view.selecionar(self.__paciente_controller.pacientes)
         enfermeiro = self.__enfermeiro_view.selecionar(self.__enfermeiro_controller.enfermeiros)
         vacina = self.__vacina_view.incluir()
-        agendamento = Agendamento(data, horario, vacina, self.__posto, enfermeiro, paciente)
+        agendamento = Agendamento(data, horario, vacina, vacina['dose'], self.__posto, enfermeiro, paciente)
         for ag in self.__dao.get_all():
             if ag.data == data and ag.paciente == paciente:
                 self.__agendamento_view.agendamento_duplicado()

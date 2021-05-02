@@ -2,10 +2,12 @@ from ..model.vacina import Vacina
 from .abstractDAO import AbstractDAO
 from ..view.tela_vacina import VacinaView
 
+
 class VacinaController():
     def __init__(self):
         self.__vacinaDAO = VacinaDAO()
         self.__view = VacinaView()
+
 
     def option(self):
         escolha = self.__view.tela_vacina()
@@ -20,6 +22,7 @@ class VacinaController():
             function()
             escolha = self.__view.tela_vacina()
 
+
     def incluir(self) -> Vacina:
         dados = self.__view.incluir()
         tipo_vacina = dados['tipo_vacina']
@@ -33,8 +36,10 @@ class VacinaController():
         self.__vacinaDAO.add(nova_vacina)
         self.__view.cadastro_sucesso()
 
+
     def listagem(self):
         self.__view.listagem(list(self.__vacinaDAO.get_all()))
+
 
     def atualizar(self):
         self.listagem()
@@ -58,3 +63,5 @@ class VacinaController():
     @property
     def vacinas(self):
         return list(self.__vacinaDAO.get_all())
+
+
