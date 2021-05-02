@@ -8,7 +8,7 @@ class PacienteDAO(AbstractDAO):
     
     def add(self, paciente: Paciente):
         if isinstance(paciente.cpf, int) and (paciente is not None) and isinstance(paciente, Paciente):
-            super().add(paciente.cpf, paciente)
+            super().add(paciente, paciente.cpf)
     
     def get(self, key: int):
         if isinstance(key, int):
