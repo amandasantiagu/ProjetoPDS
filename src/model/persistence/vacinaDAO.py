@@ -7,8 +7,9 @@ class VacinaDAO(AbstractDAO):
         super().__init__('vacinas.pkl')
     
     def add(self, vacina: Vacina):
-        if isinstance(vacina.num_id, int) and (vacina is not None) and isinstance(vacina, Vacina):
-            super().add(vacina)
+        if (vacina is not None) and isinstance(vacina, Vacina):
+            vacina.num_id = super().gen_id()
+            super().add(vacina, vacina.num_id)
     
     def get(self, key: int):
         if isinstance(key, int):
