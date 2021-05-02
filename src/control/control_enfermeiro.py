@@ -1,13 +1,14 @@
 from ..model.enfermeiro import Enfermeiro
 from ..view.tela_enfermeiro import EnfermeiroView
 from ..view.tela_endereco import EnderecoView
+from .abstractDAO import AbstractDAO
 
 
 class EnfermeiroController():
     def __init__(self):
-        self.__enfermeiros = [Enfermeiro('Amanda Santiago', 50, 382837), Enfermeiro('Paulo Moreira', 30, 312837)]
+        self.__enfermeiroDAO = EnfermeiroDAO()
         self.__view = EnfermeiroView()
-        self.__endereco_view = EnderecoView()
+        ##self.__endereco_view = EnderecoView()
 
     def option(self):
         escolha = self.__view.tela_enfermeiro()
@@ -27,7 +28,7 @@ class EnfermeiroController():
         nome = dados['nome_completo']
         idade = dados['idade']
         matricula_coren = dados['matricula_coren']
-        endereco = self.__endereco_view.novo()
+        #endereco = self.__endereco_view.novo()
         novo_enfermeiro = Enfermeiro(nome, idade, matricula_coren)
         novo_enfermeiro.endereco = endereco
         for enfermeiro in self.__enfermeiros:
@@ -38,16 +39,18 @@ class EnfermeiroController():
             self.__view.dado_invalido("Idade")
             print("Idade")
             return 
-        self.__enfermeiros.append(novo_enfermeiro)
+
+        self.__enfermeiroDAO.add(novo_enfermeiro)
         self.__view.cadastro_sucesso()
 
     def listagem(self):
-        self.__view.listagem(self.enfermeiros)
+        self.__view.listagem(list(self.__enfermeiroDAO.get_all()))
 
     def atualizar(self):
         self.listagem()
         dados = self.__view.atualizar()
-        for enf in self.__enfermeiros:
+        lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
+        for enf in lista_enfermeiros:
             if enf.matricula_coren == dados['matricula_coren']:
                 enf.nome_completo = dados['nome_completo']
                 enf.idade = dados['idade']
@@ -56,11 +59,12 @@ class EnfermeiroController():
     def excluir(self):
         self.listagem()
         matricula_coren = self.__view.excluir()
+         lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
         for enfermeiro in self.enfermeiros:
             if enfermeiro.matricula_coren == matricula_coren:
-                self.__enfermeiros.remove(enfermeiro)
+                self.__enfermeiroDAO.remove(enfermeiro.matricula_coren)
                 self.__view.sucesso_excluir()
 
     @property
     def enfermeiros(self):
-        return self.__enfermeiros
+        return list(self.__enfermeiroDAO.get_all())

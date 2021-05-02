@@ -1,13 +1,14 @@
 from ..model.paciente import Paciente
 from ..view.tela_paciente import PacienteView
 from ..view.tela_endereco import EnderecoView
+from .abstractDAO import AbstractDAO
 
 
 class PacienteController():
     def __init__(self):
-        self.__pacientes = [Paciente('Thais Helena', 70, 55124125112), Paciente('Lucas', 60, 10624125112)]
+        self.__pacienteDAO = PacienteDAO()
         self.__view = PacienteView()
-        self.__endereco_view = EnderecoView()
+        #self.__endereco_view = EnderecoView()
 
     def option(self):
         escolha = self.__view.tela_paciente()
@@ -27,35 +28,38 @@ class PacienteController():
         nome = dados['nome_completo']
         idade = dados['idade']
         cpf = dados['cpf']
-        endereco = self.__endereco_view.novo()
+        # endereco = self.__endereco_view.novo()
         novo_paciente = Paciente(nome, idade, cpf)
-        novo_paciente.endereco = endereco
+        #novo_paciente.endereco = endereco
         for paciente in self.__pacientes:
             if paciente.cpf == cpf:
                 self.__view.paciente_duplicado()
                 return
-        self.__pacientes.append(novo_paciente)
+        self.__pacienteDAO.add(novo_paciente)
         self.__view.cadastro_sucesso()
 
     def listagem(self):
-        self.__view.listagem(self.pacientes) 
+        self.__view.listagem(list(self.__pacienteDAO.get_all()))
 
     def atualizar(self):
         self.listagem()
         dados = self.__view.atualizar()
-        for paciente in self.pacientes:
+        lista_pacientes = list(self.__pacienteDAO.get_all())
+        for paciente in lista_pacientes:
             if paciente.cpf == dados['cpf']:
                 paciente.nome_completo = dados['nome_completo']
                 paciente.idade = dados['idade']
 
+
     def excluir(self):
         self.listagem()
         cpf = self.__view.excluir()
-        for paciente in self.pacientes:
+        lista_pacientes = list(self.__pacienteDAO.get_all())
+        for paciente in lista_pacientes:
             if paciente.cpf == cpf:
-                self.__pacientes.remove(paciente)
+                self.__pacienteDAO.remove(paciente.cpf)
                 self.__view.sucesso_excluir()
 
     @property
     def pacientes(self):
-        return self.__pacientes
+        return list(self.__pacienteDAO.get_all())

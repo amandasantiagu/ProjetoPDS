@@ -1,14 +1,8 @@
-from enum import Enum
-
-class DoseVacina(Enum):
-    PRIMEIRA = 1
-    SEGUNDA = 2
-
 class Vacina():
-    def __init__(self, tipo_vacina: str, fabricante: str, dose: DoseVacina = DoseVacina.PRIMEIRA):
+    def __init__(self, tipo_vacina: str, fabricante: str, num_id: int):
         self.__tipo_vacina = tipo_vacina
         self.__fabricante = fabricante
-        self.__dose = dose
+        self.__num_id = num_id
 
     @property
     def tipo_vacina(self):
@@ -25,5 +19,11 @@ class Vacina():
     @fabricante.setter
     def fabricante(self, fabricante):
         self.__fabricante = fabricante
+    
+    @property
+    def num_id(self):
+        return self.__num_id
 
-
+    @num_id.setter
+    def num_id(self, num_id):
+        self.__num_id = num_id
