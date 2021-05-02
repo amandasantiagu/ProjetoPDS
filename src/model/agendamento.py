@@ -9,12 +9,14 @@ class Agendamento():
                  data: str,
                  horario: str,
                  vacina: Vacina,
+                 dose_vacina: int,
                  posto: Posto,
                  enfermeiro: Enfermeiro = None,
                  paciente: Paciente = None):
         self.__data = data
         self.__horario = horario
         self.__vacina = vacina
+        self.__dose_vacina = dose_vacina
         self.__posto = posto
         self.__enfermeiro = enfermeiro
         self.__paciente = paciente
@@ -70,5 +72,14 @@ class Agendamento():
     @vacina.setter
     def vacina(self, vacina):
         self.__vacina = vacina
+
+
+    @property
+    def dose_vacina(self):
+        return self.__dose_vacina
+
+    @dose_vacina.setter
+    def dose_vacina(self, dose_vacina):
+        self.__dose_vacina = dose_vacina
 
 
