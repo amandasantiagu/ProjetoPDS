@@ -30,7 +30,7 @@ class AbstractDAO(ABC):
         try:
             return self.__cache[key]
         except KeyError:
-            return False
+            pass
 
     # remove o objeto do dicionario e atualiza o arquivo
     def remove(self, key):
@@ -43,7 +43,7 @@ class AbstractDAO(ABC):
     def update(self, key, item):
         try:
             self.__cache[key] = item
-            return item
+            self.__dump()
         except KeyError:
             return False
 
@@ -52,12 +52,12 @@ class AbstractDAO(ABC):
         return self.__cache.values()
 
 
-    def gen_id(self):
-        id = random.randint(1, 10000000000000)
-        if(id in self.__cache.keys()):
-            id = gen_id()
+    # def gen_id(self):
+    #     id = random.randint(1, 10000000000000)
+    #     if(id in self.__cache.keys()):
+    #         id = gen_id()
 
-        return id
+    #     return id
 
 
 

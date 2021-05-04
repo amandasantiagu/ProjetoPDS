@@ -1,14 +1,14 @@
 from ..persistence.abstractDAO import AbstractDAO
-from ..vacina import Vacina
+from ..posto import Posto
 
 
-class VacinaDAO(AbstractDAO):
+class PostoDAO(AbstractDAO):
     def __init__(self):
-        super().__init__('vacinas.pkl')
+        super().__init__('posto.pkl')
     
-    def add(self, vacina: Vacina):
-        if (vacina is not None) and isinstance(vacina, Vacina):
-            super().add(vacina, vacina.num_id)
+    def add(self, posto: Posto):
+        if (posto is not None) and isinstance(posto, Posto):
+            super().add(posto, 1)
     
     def get(self, key: int):
         if isinstance(key, int):

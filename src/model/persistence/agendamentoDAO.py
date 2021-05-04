@@ -1,4 +1,4 @@
-from abstractDAO import AbstractDAO
+from ..persistence.abstractDAO import AbstractDAO
 
 class AgendamentoDAO(AbstractDAO):
     def __init__(self):
@@ -7,7 +7,6 @@ class AgendamentoDAO(AbstractDAO):
 
     def add(self, agendamento):
         super().add(agendamento)
-
 
 
     def get(self, key):
@@ -19,4 +18,4 @@ class AgendamentoDAO(AbstractDAO):
 
 
     def get_all(self):
-        return super()get_all()
+        return super().get_all()

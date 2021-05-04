@@ -1,5 +1,5 @@
-from control.abstractDAO import AbstractDAO
-from model.paciente import Paciente
+from ..persistence.abstractDAO import AbstractDAO
+from ..paciente import Paciente
 
 
 class PacienteDAO(AbstractDAO):
