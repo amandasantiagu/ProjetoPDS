@@ -1,7 +1,7 @@
 from ..model.paciente import Paciente
 from ..view.tela_paciente import PacienteView
 from ..view.tela_endereco import EnderecoView
-from .abstractDAO import AbstractDAO
+from ..model.persistence.pacienteDAO import PacienteDAO
 
 
 class PacienteController():
@@ -31,7 +31,8 @@ class PacienteController():
         # endereco = self.__endereco_view.novo()
         novo_paciente = Paciente(nome, idade, cpf)
         #novo_paciente.endereco = endereco
-        for paciente in self.__pacientes:
+        lista_pacientes = list(self.__pacienteDAO.get_all())
+        for paciente in lista_pacientes:
             if paciente.cpf == cpf:
                 self.__view.paciente_duplicado()
                 return

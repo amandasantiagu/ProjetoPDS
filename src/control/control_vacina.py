@@ -1,5 +1,5 @@
 from ..model.vacina import Vacina
-from .abstractDAO import AbstractDAO
+from ..model.persistence.vacinaDAO import VacinaDAO
 from ..view.tela_vacina import VacinaView
 
 
@@ -27,11 +27,14 @@ class VacinaController():
         dados = self.__view.incluir()
         tipo_vacina = dados['tipo_vacina']
         fabricante = dados['fabricante']
+        quantidade = dados['quantidade']
         num_id = dados['num_id']
-        nova_vacina = Vacina(dados, tipo_vacina, num_id)
-        for vacina in self.__vacina:
+        nova_vacina = Vacina(tipo_vacina, fabricante, quantidade, num_id)
+        print (tipo_vacina, fabricante, quantidade, num_id)
+        lista_vacinas = list(self.__vacinaDAO.get_all())
+        for vacina in lista_vacinas:
             if vacina.num_id == num_id:
-               self.__view.vacina_duplicada()
+                self.__view.vacina_duplicada()
                 return
         self.__vacinaDAO.add(nova_vacina)
         self.__view.cadastro_sucesso()
@@ -44,11 +47,12 @@ class VacinaController():
     def atualizar(self):
         self.listagem()
         dados = self.__view.atualizar()
-        lista_vacinas = list(self.__vacinasDAO.get_all())
+        lista_vacinas = list(self.__vacinaDAO.get_all())
         for vacina in lista_vacinas:
             if vacina.num_id == dados['num_id']:
                 vacina.tipo_vacina = dados['tipo_vacina']
                 vacina.fabricante = dados['Fabricante']
+                vacina.quantidade = dados['quantidade']
 
 
     def excluir(self):
@@ -57,7 +61,7 @@ class VacinaController():
         lista_vacinas = list(self.__vacinaDAO.get_all())
         for vacina in lista_vacinas:
             if vacina.num_id == num_id:
-                self.__vacinaDAO.remove(vacina.id)
+                self.__vacinaDAO.remove(vacina.num_id)
                 self.__view.sucesso_excluir()
 
     @property
