@@ -17,8 +17,15 @@ class VacinaView(AbstractView):
     def incluir(self):
         tipo_vacina = input("Tipo da Vacina: ")
         fabricante = input("Fabricante: ")
-        dose = input("Dose: ")
-        return {"tipo_vacina":tipo_vacina,"fabricante":fabricante, 'dose':dose}
+        try:
+            quantidade = int(input("Quantidade: "))
+            num_id = int(input("Numero do ID: "))
+        except ValueError:
+            self.dado_invalido('num_id')
+            return self.incluir()
+        else:
+            return {"tipo_vacina":tipo_vacina,"fabricante":fabricante, 'quantidade':quantidade,'num_id':num_id }
+
 
     def excluir(self):
         try:
@@ -34,17 +41,20 @@ class VacinaView(AbstractView):
         tipo_vacina = input("Tipo da Vacina: ")
         fabricante = input("Fabricante: ")
         try:
+            quantidade = int(input ("Quantidade: "))
             num_id = int(input("Número do ID: "))
-            return {"tipo_vacina":tipo_vacina,"fabricante":fabricante, "num_id": num_id}
         except ValueError:
             self.dado_invalido('ID')
             return self
+        else:
+            return {"tipo_vacina":tipo_vacina,"fabricante":fabricante, "quantidade": quantidade, "num_id": num_id}
 
     def listagem(self, listagem):
         print("\n Listagem de Vacinas:")
         for vacina in listagem:
             print("Tipo de Vacina: " + str(vacina.tipo_vacina))
             print("Fabricante: "+ str(vacina.fabricante))
+            print("Quantidade: "+ str(vacina.quantidade))
             print("num_id: "+ str(vacina.num_id))
             print("--------------------------------\n")
     
