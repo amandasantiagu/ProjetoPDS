@@ -1,7 +1,7 @@
 from ..model.enfermeiro import Enfermeiro
 from ..view.tela_enfermeiro import EnfermeiroView
 from ..view.tela_endereco import EnderecoView
-from .abstractDAO import AbstractDAO
+from ..model.persistence.enfermeiroDAO import EnfermeiroDAO
 
 
 class EnfermeiroController():
@@ -30,8 +30,9 @@ class EnfermeiroController():
         matricula_coren = dados['matricula_coren']
         #endereco = self.__endereco_view.novo()
         novo_enfermeiro = Enfermeiro(nome, idade, matricula_coren)
-        novo_enfermeiro.endereco = endereco
-        for enfermeiro in self.__enfermeiros:
+        #novo_enfermeiro.endereco = endereco
+        lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
+        for enfermeiro in lista_enfermeiros:
             if enfermeiro.matricula_coren == matricula_coren:
                 self.__view.enfermeiro_duplicado()
                 return
@@ -59,7 +60,7 @@ class EnfermeiroController():
     def excluir(self):
         self.listagem()
         matricula_coren = self.__view.excluir()
-         lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
+        lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
         for enfermeiro in self.enfermeiros:
             if enfermeiro.matricula_coren == matricula_coren:
                 self.__enfermeiroDAO.remove(enfermeiro.matricula_coren)
