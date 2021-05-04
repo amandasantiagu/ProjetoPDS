@@ -1,7 +1,8 @@
 class Vacina():
-    def __init__(self, tipo_vacina: str, fabricante: str, num_id: int):
+    def __init__(self, tipo_vacina: str, fabricante: str, quantidade: int, num_id: int):
         self.__tipo_vacina = tipo_vacina
         self.__fabricante = fabricante
+        self.__quantidade = quantidade
         self.__num_id = num_id
 
     @property
@@ -19,6 +20,14 @@ class Vacina():
     @fabricante.setter
     def fabricante(self, fabricante):
         self.__fabricante = fabricante
+    
+    @property
+    def quantidade(self):
+        return self.__quantidade
+
+    @quantidade.setter
+    def quantidade(self, quantidade):
+        self.__quantidade = quantidade
     
     @property
     def num_id(self):
