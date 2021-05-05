@@ -1,41 +1,17 @@
-import os
+import PySimpleGUI as sg
 from abc import ABC, abstractmethod
 
 class AbstractView(ABC):
 
-    def clear(self):
-        os.system('cls' if os.name=='nt' else 'clear')
+    def __init__(self, title_text):
+        self.__title_text = title_text
+        self.__window = None
 
 
-    def le_inteiro(self, msg: str = "", opcoes = None):
-        if opcoes is None:
-            opcoes = []
-        else:
-            opcoes = list(opcoes)
-        while True:
-            value = input(msg)
-            try:
-                opcao = int(value)
-                if opcao not in opcoes:
-                    raise ValueError
-                return opcao
-            except ValueError:
-                print('Valor inválido. Tente novamente.')
-                if (len(opcoes) != 0):
-                    print("Valores válidos: ", opcoes)
+    def show(self, layout):
+        self.__window = sg.Window(self.__title_text).Layout(layout)
+        
 
-    @abstractmethod
-    def incluir(self):
-        pass
-
-    @abstractmethod
-    def excluir(self):
-        pass
-
-    @abstractmethod
-    def listagem(self):
-        pass
-
-    @abstractmethod
-    def atualizar(self):
-        pass
+    def read(self):
+        button, values = window.Read()
+        return values
