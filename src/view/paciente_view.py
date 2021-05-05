@@ -1,31 +1,31 @@
-import os
+import PySimpleGUI as sg
 
 from .abstractView import AbstractView
 
 class PacienteView(AbstractView):
-    def __init__(self):
-        pass
 
     def tela_paciente(self):
-        print ("\n ---- Cadastro do Paciente ----")
-        print ("1 - Incluir Paciente")
-        print ("2 - Excluir Paciente")
-        print ("3 - Alterações no Cadastro")
-        print ("4 - Listagem de Pacientes")
-        print ("0 - Sair")
-        opcao = self.le_inteiro('Digite uma opção: ', [1, 2, 3, 4, 0])
-        return opcao
+        layout = [
+                    [sg.Button('Cadastrar Paciente')],
+                    [sg.Button('Listar Pacientes')],
+                    [sg.Button('Atualizar Paciente')],
+                    [sg.Button('Remover Paciente')],
+                ]
+        window = sg.Window('Pacientes').Layout(layout)
+        button_str = window.read()
+        return button_str
 
     def incluir(self):
-        self.clear()
-        nome_completo = input("Nome Completo do Paciente: ")
-        idade = self.le_inteiro("Idade: ", range(1, 150))
-        try:
-            cpf = int(input("Número do CPF: "))
-            return {'nome_completo': nome_completo, 'idade':idade, 'cpf':cpf}
-        except ValueError:
-            self.dado_invalido('CPF')
-            return self.incluir()
+        layout = [
+                    [sg.Text('Nome', size=(15, 1)), sg.InputText()],
+                    [sg.Text('Idade', size=(15, 1)), sg.InputText()],
+                    [sg.Text('CPF', size=(15, 1)), sg.InputText()],
+                    [sg.Submit(), sg.Cancel()]
+                ]
+        window = sg.Window('Incluir Paciente').Layout(layout)
+        button_str, items = window.read()
+        values = self.set_keys_to_attrs(items, ['nome_completo', 'idade', 'cpf'])
+        return values
 
     def excluir(self):
         try:
@@ -70,18 +70,3 @@ class PacienteView(AbstractView):
 
     #     escolha = self.le_inteiro("-->", opcoes = range(1, count))
     #     return pacientes[escolha - 1]
-
-    def cadastro_sucesso(self):
-        print("------- Paciente cadastrado com sucesso! -------")
-
-    def paciente_duplicado(self):
-        print("Erro! Paciente já cadastrado.")
-
-    def dado_invalido(self, dado_str):
-        print("Erro! Dado inválido: ", dado_str)
-
-    def sucesso_atualizar(self):
-        print("------- Atualizado com Sucesso. --------")
-
-    def sucesso_excluir(self):
-        print("------- Excluido com Sucesso -------.")
