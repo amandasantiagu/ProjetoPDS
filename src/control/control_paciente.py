@@ -1,6 +1,6 @@
 from ..model.paciente import Paciente
-from ..view.tela_paciente import PacienteView
-from ..view.tela_endereco import EnderecoView
+from ..view.paciente_view import PacienteView
+from ..view.endereco_view import EnderecoView
 from ..model.persistence.pacienteDAO import PacienteDAO
 
 
@@ -12,12 +12,12 @@ class PacienteController():
 
     def option(self):
         escolha = self.__view.tela_paciente()
-        while escolha != 0:
+        while escolha != 'Sair' and escolha != None:
             options = {
-                    1: self.incluir,
-                    2: self.excluir,
-                    3: self.atualizar,
-                    4: self.listagem,
+                    'Cadastrar Paciente': self.incluir,
+                    'Listar Pacientes': self.listagem,
+                    'Atualizar Paciente': self.atualizar,
+                    'Remover Paciente': self.excluir,
                     }
             function = options[escolha]
             function()
@@ -25,19 +25,23 @@ class PacienteController():
 
     def incluir(self) -> Paciente:
         dados = self.__view.incluir()
-        nome = dados['nome_completo']
-        idade = dados['idade']
-        cpf = dados['cpf']
-        # endereco = self.__endereco_view.novo()
-        novo_paciente = Paciente(nome, idade, cpf)
-        #novo_paciente.endereco = endereco
-        lista_pacientes = list(self.__pacienteDAO.get_all())
-        for paciente in lista_pacientes:
-            if paciente.cpf == cpf:
-                self.__view.paciente_duplicado()
-                return
-        self.__pacienteDAO.add(novo_paciente)
-        self.__view.cadastro_sucesso()
+        if dados != None:
+            nome = dados['nome_completo']
+            idade = dados['idade']
+            try:
+                cpf = int(dados['cpf'])
+            except TypeError:
+                self.__view.dado_invalido('cpf')
+            # endereco = self.__endereco_view.novo()
+            novo_paciente = Paciente(nome, idade, cpf)
+            #novo_paciente.endereco = endereco
+            lista_pacientes = list(self.__pacienteDAO.get_all())
+            for paciente in lista_pacientes:
+                if paciente.cpf == cpf:
+                    self.__view.paciente_duplicado()
+                    return
+            self.__pacienteDAO.add(novo_paciente)
+            self.__view.cadastro_sucesso()
 
     def listagem(self):
         self.__view.listagem(list(self.__pacienteDAO.get_all()))
@@ -53,7 +57,6 @@ class PacienteController():
 
 
     def excluir(self):
-        self.listagem()
         cpf = self.__view.excluir()
         lista_pacientes = list(self.__pacienteDAO.get_all())
         for paciente in lista_pacientes:
