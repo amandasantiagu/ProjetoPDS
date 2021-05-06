@@ -1,3 +1,4 @@
+import PySimpleGUI as sg
 from .abstractView import AbstractView
 
 class EnfermeiroView(AbstractView):
@@ -6,25 +7,30 @@ class EnfermeiroView(AbstractView):
         pass
 
     def tela_enfermeiro(self):
-        print ("\n ---- Cadastro do Enfermeiro ----")
-        print ("1 - Incluir Enfermeiro")
-        print ("2 - Excluir Enfermeiro")
-        print ("3 - Alterações no Cadastro")
-        print ("4 - Listagem de Enfermeiros")
-        print ("0 - Sair")
-        opcao = self.le_inteiro('Digite uma opção: ', [1, 2, 3, 4, 0])
-        return opcao
+        layout = [
+                    [sg.Button('Cadastrar Enfermeiro')],
+                    [sg.Button('Listar Enfermeiro')],
+                    [sg.Button('Atualizar Enfermeiro')],
+                    [sg.Button('Remover Enfermeiro')],
+                    [sg.Button('Sair')],
+                ]
+        window = sg.Window('Enfermeiros').Layout(layout)
+        button_str = window.read()
+        window.close()
+        return button_str[0]
 
     def incluir(self):
-        self.clear()
-        nome_completo = input("Nome do Enfermeiro: ")
-        try:
-            idade = int(input("Idade: "))
-            matricula_coren = int(input("Numero de matricula coren: "))
-            return {'nome_completo': nome_completo, 'idade':idade, 'matricula_coren':matricula_coren}
-        except ValueError:
-            self.dado_invalido('matricula_coren')
-            return self.incluir()
+        layout = [
+                    [sg.Text('Nome', size=(15, 1)), sg.InputText()],
+                    [sg.Text('Idade', size=(15, 1)), sg.InputText()],
+                    [sg.Text('Matricula COREN', size=(15, 1)), sg.InputText()],
+                    [sg.Submit(), sg.Cancel()]
+                ]
+        window = sg.Window('Cadastrar Enfermeiro').Layout(layout)
+        button_str, items = window.read()
+        print(type(items))
+        values = self.set_keys_to_attrs(items, {0: 'nome_completo', 1: 'idade', 2: 'matricula_coren'})
+        return values
 
     def excluir(self):
         self.clear()

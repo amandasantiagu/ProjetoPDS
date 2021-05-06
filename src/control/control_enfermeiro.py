@@ -1,6 +1,6 @@
 from ..model.enfermeiro import Enfermeiro
-from ..view.tela_enfermeiro import EnfermeiroView
-from ..view.tela_endereco import EnderecoView
+from ..view.enfermeiro_view import EnfermeiroView
+from ..view.endereco_view import EnderecoView
 from ..model.persistence.enfermeiroDAO import EnfermeiroDAO
 
 
@@ -12,12 +12,12 @@ class EnfermeiroController():
 
     def option(self):
         escolha = self.__view.tela_enfermeiro()
-        while escolha != 0:
+        while escolha != 'Sair' and escolha != None:
             options = {
-                    1: self.incluir,
-                    2: self.excluir,
-                    3: self.atualizar,
-                    4: self.listagem,
+                    'Cadastrar Enfermeiro': self.incluir,
+                    'Listar Enfermeiros': self.listagem,
+                    'Atualizar Enfermeiro': self.atualizar,
+                    'Remover Enfermeiro': self.excluir,
                     }
             function = options[escolha]
             function()
