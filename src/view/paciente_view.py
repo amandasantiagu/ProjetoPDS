@@ -59,7 +59,7 @@ class PacienteView(AbstractView):
         ]  
         window = sg.Window('Listagem de Pacientes').Layout(layout)
         button, values = window.Read(timeout=6)
-        
+
         while button != 'Voltar' and button != None:
             window.FindElement("_listagem_").Update('')
             for paciente in listagem:
@@ -74,16 +74,32 @@ class PacienteView(AbstractView):
         window.close()
 
     def atualizar(self):
-        self.clear()
-        print("\n Para atualizar o CPF deve estar correto")
-        nome_completo = input("Nome Completo do Paciente: ")
-        idade = self.le_inteiro("Idade: ", range(1, 150))
+        layout = [
+                    [sg.Text('Nome', size=(15, 1)), sg.InputText()],
+                    [sg.Text('Idade', size=(15, 1)), sg.InputText()],
+                    [sg.Text('CPF', size=(15, 1)), sg.InputText()],
+                    [sg.Submit(), sg.Cancel()]
+        ]
+        window = sg.Window('Atualizar Paciente').Layout(layout)
+        button_str, items = window.read()
         try:
-            cpf = int(input("CPF do Paciente: "))
-            return {'nome_completo': nome_completo, 'idade':idade, 'cpf':cpf}
+            cpf = int(items[2])
         except ValueError:
             self.dado_invalido('CPF')
-            return self
+            window.close()
+            return None
+        else:
+            window.close()    
+            return cpf
+        # print("\n Para atualizar o CPF deve estar correto")
+        # nome_completo = input("Nome Completo do Paciente: ")
+        # idade = self.le_inteiro("Idade: ", range(1, 150))
+        # try:
+        #     cpf = int(input("CPF do Paciente: "))
+        #     return {'nome_completo': nome_completo, 'idade':idade, 'cpf':cpf}
+        # except ValueError:
+        #     self.dado_invalido('CPF')
+        #     return self
 
     # ONDE VAMOS USAR?
     # def selecionar(self, pacientes):

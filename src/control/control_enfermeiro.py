@@ -25,24 +25,27 @@ class EnfermeiroController():
 
     def incluir(self) -> Enfermeiro:
         dados = self.__view.incluir()
-        nome = dados['nome_completo']
-        idade = dados['idade']
-        matricula_coren = dados['matricula_coren']
-        #endereco = self.__endereco_view.novo()
-        novo_enfermeiro = Enfermeiro(nome, idade, matricula_coren)
-        #novo_enfermeiro.endereco = endereco
-        lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
-        for enfermeiro in lista_enfermeiros:
-            if enfermeiro.matricula_coren == matricula_coren:
-                self.__view.enfermeiro_duplicado()
-                return
-        if novo_enfermeiro.idade < 0 and novo_enfermeiro.idade >= 180:
-            self.__view.dado_invalido("Idade")
-            print("Idade")
-            return 
+        if dados != None:
+            nome = dados['nome_completo']
+            try:
+                idade = int(dados['idade'])
+                matricula_coren = int(dados['matricula_coren'])
+            except TypeError:
+                self.__view.dado_invalido('CPF ou idade')
+            #endereco = self.__endereco_view.novo()
+            novo_enfermeiro = Enfermeiro(nome, idade, matricula_coren)
+            #novo_enfermeiro.endereco = endereco
+            lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
+            for enfermeiro in lista_enfermeiros:
+                if enfermeiro.matricula_coren == matricula_coren:
+                    self.__view.enfermeiro_duplicado()
+                    return
+            if novo_enfermeiro.idade < 0 and novo_enfermeiro.idade >= 180:
+                self.__view.dado_invalido('idade')
+                return 
 
-        self.__enfermeiroDAO.add(novo_enfermeiro)
-        self.__view.cadastro_sucesso()
+            self.__enfermeiroDAO.add(novo_enfermeiro)
+            self.__view.cadastro_sucesso()
 
     def listagem(self):
         self.__view.listagem(list(self.__enfermeiroDAO.get_all()))
@@ -58,7 +61,6 @@ class EnfermeiroController():
                 self.__view.sucesso_atualizar()
 
     def excluir(self):
-        self.listagem()
         matricula_coren = self.__view.excluir()
         lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
         for enfermeiro in self.enfermeiros:
