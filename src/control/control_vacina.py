@@ -1,6 +1,6 @@
 from ..model.vacina import Vacina
 from ..model.persistence.vacinaDAO import VacinaDAO
-from ..view.tela_vacina import VacinaView
+from ..view.vacina_view import VacinaView
 
 
 class VacinaController():
