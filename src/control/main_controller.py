@@ -4,7 +4,7 @@ from .control_vacina import VacinaController
 from .control_agendamento import AgendamentoController
 from .control_posto import PostoController
 from .control_relatorio import RelatorioController
-from ..view.tela_sistema import TelaSistemaView
+from ..view.main_view import TelaSistemaView
 
 
 class MainController:
@@ -21,24 +21,17 @@ class MainController:
 
     def run(self):
         escolha = 'x'
-        while escolha != 0:
-
+        while escolha != 'Sair' and escolha != None:
             opcoes = {
-                    1: self.__controller_paciente.option,
-                    2: self.__controller_enfermeiro.option,
-                    3: self.__controller_vacina.option,
-                    4: self.__controller_agendamentos.option,
-                    5: self.__controller_relatorio.relatorio,
-                    6: self.__controller_posto.incluir,
-                    0: self.sair
+                    'Cadastrar Paciente': self.__controller_paciente.option,
+                    'Cadastro do Enfermeiro': self.__controller_enfermeiro.option,
+                    'Cadastro de Vacinas': self.__controller_vacina.option,
+                    'Agendamentos': self.__controller_agendamentos.option,
+                    'Gerar Relatório Geral': self.__controller_relatorio.relatorio,
+                    'Alterar nome do Posto': self.__controller_posto.incluir,
                     }
             escolha = self.__view.menu_principal()
-            try:
-                opcoes[escolha]() 
-            except KeyError:
-                print('Opção inválida. Tente novamente.')
-                continue
-
+            opcoes[escolha]()
     
     def sair(self):
         return

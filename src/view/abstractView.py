@@ -1,41 +1,13 @@
-import os
 from abc import ABC, abstractmethod
 
 class AbstractView(ABC):
 
-    def clear(self):
-        os.system('cls' if os.name=='nt' else 'clear')
+    #dict keys as integers mean nothing to me
+    def set_keys_to_attrs(self, values, attributes):
+        count = 0
+        for key, value in values.items():
+            values[attributes[count]] = values.pop(count)
+            count += 1
 
+        return values
 
-    def le_inteiro(self, msg: str = "", opcoes = None):
-        if opcoes is None:
-            opcoes = []
-        else:
-            opcoes = list(opcoes)
-        while True:
-            value = input(msg)
-            try:
-                opcao = int(value)
-                if opcao not in opcoes:
-                    raise ValueError
-                return opcao
-            except ValueError:
-                print('Valor inválido. Tente novamente.')
-                if (len(opcoes) != 0):
-                    print("Valores válidos: ", opcoes)
-
-    @abstractmethod
-    def incluir(self):
-        pass
-
-    @abstractmethod
-    def excluir(self):
-        pass
-
-    @abstractmethod
-    def listagem(self):
-        pass
-
-    @abstractmethod
-    def atualizar(self):
-        pass

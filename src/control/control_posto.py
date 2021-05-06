@@ -1,5 +1,5 @@
 from ..model.posto import Posto
-from ..view.tela_posto import PostoView
+from ..view.posto_view import PostoView
 from ..model.persistence.postoDAO import PostoDAO
 
 class PostoController:
@@ -8,8 +8,6 @@ class PostoController:
         self.__view = PostoView()
         self.__postoDAO= PostoDAO()
         self.__posto = self.__postoDAO.get(1)
-        print("xx", self.__posto)
-        print("xx1", self.__posto.nome)
         if self.__posto is None:
             self.__posto = Posto("Santiago&Moreira")
             self.__postoDAO.add(self.__posto)

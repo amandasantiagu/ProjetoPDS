@@ -3,10 +3,10 @@ from ..model.agendamento import Agendamento
 from ..model.enfermeiro import Enfermeiro
 from ..model.vacina import Vacina
 from ..model.persistence.agendamentoDAO import AgendamentoDAO
-from ..view.tela_agendamento import AgendamentoView
-from ..view.tela_vacina import VacinaView
-from ..view.tela_paciente import PacienteView
-from ..view.tela_enfermeiro import EnfermeiroView
+from ..view.agendamento_view import AgendamentoView
+from ..view.vacina_view import VacinaView
+from ..view.paciente_view import PacienteView
+from ..view.enfermeiro_view import EnfermeiroView
 
 
 class AgendamentoController():

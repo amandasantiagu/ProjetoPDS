@@ -8,7 +8,7 @@ class VacinaDAO(AbstractDAO):
     
     def add(self, vacina: Vacina):
         if (vacina is not None) and isinstance(vacina, Vacina):
-            super().add(vacina, vacina.num_id)
+            super().add(vacina)
     
     def get(self, key: int):
         if isinstance(key, int):
