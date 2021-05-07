@@ -15,7 +15,7 @@ class TelaSistemaView:
                 [sg.Button('Alterar nome do Posto')],
                 [sg.Button('Sair')],
                 ]
-        window = sg.Window('Tela de Sistema').Layout(layout)
+        window = sg.Window('Tela de Sistema', size=(300,300)).Layout(layout)
         button_str = window.read()
         window.close()
         return button_str[0]
