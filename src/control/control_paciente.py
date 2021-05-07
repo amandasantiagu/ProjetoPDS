@@ -26,10 +26,10 @@ class PacienteController():
     def incluir(self) -> Paciente:
         dados = self.__view.incluir()
         if dados != None:
-            nome = dados['nome_completo']
-            idade = dados['idade']
+            nome = dados[0]
+            idade = dados[1]
             try:
-                cpf = int(dados['cpf'])
+                cpf = int(dados[2])
             except TypeError:
                 self.__view.dado_invalido('cpf')
             # endereco = self.__endereco_view.novo()
@@ -51,9 +51,9 @@ class PacienteController():
         dados = self.__view.atualizar()
         lista_pacientes = list(self.__pacienteDAO.get_all())
         for paciente in lista_pacientes:
-            if paciente.cpf == dados['cpf']:
-                paciente.nome_completo = dados['nome_completo']
-                paciente.idade = dados['idade']
+            if paciente.cpf == dados[0]:
+                paciente.nome_completo = dados[1]
+                paciente.idade = dados[2]
 
 
     def excluir(self):
