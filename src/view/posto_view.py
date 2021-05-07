@@ -9,10 +9,10 @@ class PostoView:
         window = sg.Window('Atualização de nome do Posto').Layout(layout)
         button_str, items = window.read()
         if button_str == 'Submit':  
-            values = self.set_keys_to_attrs(items, {0: 'nome'})
-            print(values)
+            # values = self.set_keys_to_attrs(items, {0: 'nome'})
+            # print(values)
             window.close()
-            return values
+            return items[0]
         else:
             window.close()
             return None
