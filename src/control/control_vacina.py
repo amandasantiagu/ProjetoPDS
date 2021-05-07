@@ -11,13 +11,13 @@ class VacinaController():
 
     def option(self):
         escolha = self.__view.tela_vacina()
-        while escolha != 0:
+        while escolha != 'Sair' and escolha != None:
             options = {
-                    1: self.incluir,
-                    2: self.excluir,
-                    3: self.atualizar,
-                    4: self.listagem,
-                    }
+                'Incluir Vacina': self.incluir,
+                'Listar Vacinas': self.listagem,
+                'Atualizar Vacina': self.atualizar,
+                'Remover Vacina': self.excluir,
+            }
             function = options[escolha]
             function()
             escolha = self.__view.tela_vacina()
@@ -25,19 +25,22 @@ class VacinaController():
 
     def incluir(self) -> Vacina:
         dados = self.__view.incluir()
-        tipo_vacina = dados['tipo_vacina']
-        fabricante = dados['fabricante']
-        quantidade = dados['quantidade']
-        num_id = dados['num_id']
-        nova_vacina = Vacina(tipo_vacina, fabricante, quantidade, num_id)
-        print (tipo_vacina, fabricante, quantidade, num_id)
-        lista_vacinas = list(self.__vacinaDAO.get_all())
-        for vacina in lista_vacinas:
-            if vacina.num_id == num_id:
-                self.__view.vacina_duplicada()
-                return
-        self.__vacinaDAO.add(nova_vacina)
-        self.__view.cadastro_sucesso()
+        if dados != None:
+            tipo_vacina = dados['tipo_vacina']
+            fabricante = dados['fabricante']
+            try:
+                quantidade = int(dados['quantidade'])
+                num_id = int(dados['num_id'])
+            except TypeError:
+                self.__view.dado_invalido()
+            nova_vacina = Vacina(tipo_vacina, fabricante, quantidade, num_id)
+            lista_vacinas = list(self.__vacinaDAO.get_all())
+            for vacina in lista_vacinas:
+                if vacina.num_id == num_id:
+                    self.__view.vacina_duplicada()
+                    return
+            self.__vacinaDAO.add(nova_vacina)
+            self.__view.cadastro_sucesso()
 
 
     def listagem(self):
