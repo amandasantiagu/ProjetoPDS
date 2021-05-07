@@ -27,10 +27,9 @@ class PacienteView(AbstractView):
         window = sg.Window('Incluir Paciente').Layout(layout)
         button_str, items = window.read()
         if button_str == 'Submit':  
-            values = self.set_keys_to_attrs(items, {0: 'nome_completo', 1: 'idade', 2: 'cpf'})
-            print(values)
+            # values = self.set_keys_to_attrs(items, {0: 'nome_completo', 1: 'idade', 2: 'cpf'})
             window.close()
-            return values
+            return items
         else:
             window.close()
             return None
@@ -122,8 +121,8 @@ class PacienteView(AbstractView):
     def paciente_duplicado(self):
         sg.popup("Erro! Paciente já cadastrado.")
 
-    def dado_invalido(self, dado_str):
-        sg.popup("Erro! Dado inválido: ", dado_str)
+    def dado_invalido(self):
+        sg.popup("Erro! Dado inválido")
 
     def sucesso_atualizar(self):
         sg.popup("------- Atualizado com Sucesso. --------")
