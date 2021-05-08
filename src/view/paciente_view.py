@@ -100,29 +100,15 @@ class PacienteView(AbstractView):
         button_str, items = window.read()
         window.close()
         try:
-            idade= int(idade)
+            idade= int(items[1])
         except ValueError:
             self.dado_invalido()
         else:
-            if button_str == 'Submit':
+            if 'Submit' in button_str:
                 return items
             else:
                 return None
 
-    # ONDE VAMOS USAR?
-    # def selecionar(self, pacientes):
-    #     count = 1
-    #     print("Selecione um paciente")
-    #     for paciente in pacientes:
-    #         print("Paciente nº: ", count)
-    #         print("Nome: " + paciente.nome_completo)
-    #         print("Idade: "+ str(paciente.idade))
-    #         print("CPF: "+ str(paciente.cpf))
-    #         print("--------------------------------\n")
-    #         count += 1
-
-    #     escolha = self.le_inteiro("-->", opcoes = range(1, count))
-    #     return pacientes[escolha - 1]
 
     def cadastro_sucesso(self):
         sg.popup("------- Paciente cadastrado com sucesso! -------")

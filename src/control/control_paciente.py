@@ -44,15 +44,19 @@ class PacienteController():
                 self.__pacienteDAO.add(novo_paciente)
                 self.__view.cadastro_sucesso()
 
+
     def listagem(self):
         self.__view.listagem(list(self.__pacienteDAO.get_all()))
+
 
     def get_pacient_att(self):
         lista_pacientes = list(self.__pacienteDAO.get_all())
         return self.__view.get_pacient_att(lista_pacientes)
 
+
     def atualizar(self):
         paciente_escolhido = self.get_pacient_att()
+        paciente_escolhido = paciente_escolhido[0].split('---')
         print(paciente_escolhido)
         try:
             idade_int = int(paciente_escolhido[1])
