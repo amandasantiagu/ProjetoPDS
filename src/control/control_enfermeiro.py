@@ -62,12 +62,14 @@ class EnfermeiroController():
                 self.__view.sucesso_atualizar()
 
     def excluir(self):
-        matricula_coren = self.__view.excluir()
         lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
-        for enfermeiro in self.enfermeiros:
-            if enfermeiro.matricula_coren == matricula_coren:
-                self.__enfermeiroDAO.remove(enfermeiro.matricula_coren)
-                self.__view.sucesso_excluir()
+        enfermeiros_a_excluir = self.__view.excluir(lista_enfermeiros)
+        if lista_enfermeiros != None and enfermeiros_a_excluir != None:
+            for enfermeiros in lista_enfermeiros:
+                for exc in enfermeiros_a_excluir:
+                        if enfermeiro.nome_completo in exc and str(enfermeiro.matricula_coren) in exc:
+                            self.__pacienteDAO.remove(enfermeiros.matricula_coren)
+                            self.__view.sucesso_excluir()
 
     @property
     def enfermeiros(self):

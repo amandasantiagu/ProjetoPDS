@@ -29,30 +29,29 @@ class EnfermeiroView(AbstractView):
         window = sg.Window('Incluir Enfermeiro').Layout(layout)
         button_str, items = window.read()
         if button_str == 'Submit':  
-            # values = self.set_keys_to_attrs(items, {0: 'nome_completo', 1: 'idade', 2: 'matricula_coren'})
-            # print('valor',values)
+            values = self.set_keys_to_attrss(items, ['nome_completo', 'Idade', 'Matricula_coren'])
             window.close()
             return items
         else:
             window.close()
             return None
 
-    def excluir(self):
+    def excluir(self, enfermeiros):
+        enfermeiro_str = []
+        for enfermeiro in enfermeiros:
+            enfermeiro_str.append(enfermeiro.nome_completo + ' -- ' + str(enfermeiro.matricula_coren))
         layout = [
-                    [sg.Text('Matricula', size=(15, 1)), sg.InputText()],
+                    [sg.Listbox(values=enfermeiro_str, select_mode='extended', key='enf', size=(30, 6))],
                     [sg.Submit(), sg.Cancel()]
                 ]
-        window = sg.Window('Excluir Enfermeiro').Layout(layout)
+        window = sg.Window('Excluir Paciente').Layout(layout)
         button_str, items = window.read()
-        try:
-           matricula_coren = int(items[0])
-        except ValueError:
-            self.dado_invalido('Matricula')
+        if button_str == 'Submit':
+            window.close()
+            return items['enf']
+        else:
             window.close()
             return None
-        else:
-            window.close()    
-            return matricula_coren
     
     def listagem(self, listagem):
         layout = [

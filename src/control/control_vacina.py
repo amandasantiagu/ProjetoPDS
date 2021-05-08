@@ -60,10 +60,12 @@ class VacinaController():
     def excluir(self):
         lista_vacinas = list(self.__vacinaDAO.get_all())
         vacinas_a_excluir = self.__view.excluir(lista_vacinas)
-        for vacina in lista_vacinas:
-            for exc in vacinas_a_excluir:
-                if vacina.tipo_vacina in exc and vacina.fabricante in exc:
-                    self.__vacinaDAO.remove(vacina.num_id)
+        if lista_vacinas != None and vacinas_a_excluir != None:
+            for vacina in lista_vacinas:
+                for exc in vacinas_a_excluir:
+                    if vacina.tipo_vacina in exc and vacina.fabricante in exc:
+                        self.__vacinaDAO.remove(vacina.num_id)
+                        self.__view.sucesso_excluir()
 
     @property
     def vacinas(self):
