@@ -21,10 +21,7 @@ class AbstractDAO(ABC):
         self.__cache = pickle.load(open(self.__datasource, 'rb'))
 
     #adiciona objeto no dicionário, atualiza o arquivo
-    def add(self, objeto, key=None):
-        if key is None:
-            key = self.gen_id()
-
+    def add(self, objeto, key):
         self.__cache[key] = objeto
         self.__dump()
 
@@ -56,7 +53,7 @@ class AbstractDAO(ABC):
 
 
     def gen_id(self):
-        id = random.randint(1, 10000000000000)
+        id = random.randint(1, 1000)
         if(id in self.__cache.keys()):
             id = gen_id()
 
