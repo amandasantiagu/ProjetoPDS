@@ -23,12 +23,12 @@ class MainController:
         escolha = 'x'
         while escolha != 'Sair' and escolha != None:
             opcoes = {
-                    'Cadastrar Paciente': self.__controller_paciente.option,
-                    'Cadastro do Enfermeiro': self.__controller_enfermeiro.option,
-                    'Cadastro de Vacinas': self.__controller_vacina.option,
+                    'Paciente': self.__controller_paciente.option,
+                    'Enfermeiro': self.__controller_enfermeiro.option,
+                    'Vacinas': self.__controller_vacina.option,
                     'Agendamentos': self.__controller_agendamentos.option,
-                    'Gerar Relatório Geral': self.__controller_relatorio.relatorio,
-                    'Alterar nome do Posto': self.__controller_posto.incluir,
+                    'Relatório Geral': self.__controller_relatorio.relatorio,
+                    'Alterar Nome do Posto': self.__controller_posto.incluir,
                     }
             escolha = self.__view.menu_principal()
             opcoes[escolha]()
