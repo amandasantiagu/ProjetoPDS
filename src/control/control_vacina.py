@@ -24,17 +24,15 @@ class VacinaController():
 
 
     def incluir(self) -> Vacina:
-        dados = self.__view.incluir()
-        if dados != None:
-            tipo_vacina = dados[0]
-            fabricante = dados[1]
+        data = self.__view.incluir()
+        if data != None:
+            tipo_vacina = data['tipo_vacina']
+            fabricante = data['fabricante']
             try:
-                quantidade = int(dados[2])
-                num_id = int(dados[3])
-            except TypeError:
+                quantidade = int(data['quantidade'])
+            except ValueError:
                 self.__view.dado_invalido()
-            nova_vacina = Vacina(tipo_vacina, fabricante, quantidade, num_id)
-            print(nova_vacina)
+            nova_vacina = Vacina(tipo_vacina, fabricante, quantidade)
             lista_vacinas = list(self.__vacinaDAO.get_all())
             for vacina in lista_vacinas:
                 if vacina.num_id == num_id:
@@ -50,13 +48,13 @@ class VacinaController():
 
     def atualizar(self):
         self.listagem()
-        dados = self.__view.atualizar()
+        data = self.__view.atualizar()
         lista_vacinas = list(self.__vacinaDAO.get_all())
         for vacina in lista_vacinas:
-            if vacina.num_id == dados['num_id']:
-                vacina.tipo_vacina = dados['tipo_vacina']
-                vacina.fabricante = dados['Fabricante']
-                vacina.quantidade = dados['quantidade']
+            if vacina.num_id == data['num_id']:
+                vacina.tipo_vacina = data['tipo_vacina']
+                vacina.fabricante = data['fabricante']
+                vacina.quantidade = data['quantidade']
 
 
     def excluir(self):
