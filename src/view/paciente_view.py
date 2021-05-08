@@ -27,29 +27,29 @@ class PacienteView(AbstractView):
         window = sg.Window('Incluir Paciente').Layout(layout)
         button_str, items = window.read()
         if button_str == 'Submit':  
-            # values = self.set_keys_to_attrs(items, {0: 'nome_completo', 1: 'idade', 2: 'cpf'})
+            values = self.set_keys_to_attrs(items, ['nome_completo', 'Idade', 'CPF'])
             window.close()
             return items
         else:
             window.close()
             return None
 
-    def excluir(self):
+    def excluir(self, pacientes):
+        paciente_str = []
+        for paciente in pacientes:
+            paciente_str.append(paciente.nome_completo + ' -- ' + str(paciente.cpf))
         layout = [
-                    [sg.Text('CPF', size=(15, 1)), sg.InputText()],
+                    [sg.Listbox(values=paciente_str, select_mode='extended', key='pac', size=(30, 6))],
                     [sg.Submit(), sg.Cancel()]
                 ]
         window = sg.Window('Excluir Paciente').Layout(layout)
         button_str, items = window.read()
-        try:
-            cpf = int(items[0])
-        except ValueError:
-            self.dado_invalido('CPF')
+        if button_str == 'Submit':
+            window.close()
+            return items['pac']
+        else:
             window.close()
             return None
-        else:
-            window.close()    
-            return cpf
     
     def listagem(self, listagem):
         layout = [
@@ -72,33 +72,42 @@ class PacienteView(AbstractView):
             button, values = window.Read()
         window.close()
 
+    def get_pacient_att(self, lista_pacientes):
+        paciente_str = []
+        for paciente in lista_pacientes:
+            paciente_str.append(paciente.nome_completo + '---' + str(paciente.idade) + '---' + str(paciente.cpf))
+        layout = [
+                    [sg.Listbox(values=paciente_str, select_mode='extended', key='pac', size=(30, 6))],
+                    [sg.Submit(), sg.Cancel()]
+                ]
+        window = sg.Window('Escolha o Paciente').Layout(layout)
+        button_str, items = window.read()
+        if button_str == 'Submit':
+            window.close()
+            return items['pac']
+        else:
+            window.close()
+            return None
+
+
     def atualizar(self):
         layout = [
                     [sg.Text('Nome', size=(15, 1)), sg.InputText()],
                     [sg.Text('Idade', size=(15, 1)), sg.InputText()],
-                    [sg.Text('CPF', size=(15, 1)), sg.InputText()],
                     [sg.Submit(), sg.Cancel()]
         ]
         window = sg.Window('Atualizar Paciente').Layout(layout)
         button_str, items = window.read()
+        window.close()
         try:
-            cpf = int(items[2])
+            idade= int(idade)
         except ValueError:
-            self.dado_invalido('CPF')
-            window.close()
-            return None
+            self.dado_invalido()
         else:
-            window.close()    
-            return cpf
-        # print("\n Para atualizar o CPF deve estar correto")
-        # nome_completo = input("Nome Completo do Paciente: ")
-        # idade = self.le_inteiro("Idade: ", range(1, 150))
-        # try:
-        #     cpf = int(input("CPF do Paciente: "))
-        #     return {'nome_completo': nome_completo, 'idade':idade, 'cpf':cpf}
-        # except ValueError:
-        #     self.dado_invalido('CPF')
-        #     return self
+            if button_str == 'Submit':
+                return items
+            else:
+                return None
 
     # ONDE VAMOS USAR?
     # def selecionar(self, pacientes):
