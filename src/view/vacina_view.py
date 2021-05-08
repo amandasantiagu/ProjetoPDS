@@ -3,8 +3,6 @@ import PySimpleGUI as sg
 from .abstractView import AbstractView
 
 class VacinaView(AbstractView):
-    def __init__(self):
-        pass
 
     def tela_vacina(self):
         layout = [
@@ -24,16 +22,13 @@ class VacinaView(AbstractView):
                     [sg.Text('Tipo de Vacina', size=(15, 1)), sg.InputText()],
                     [sg.Text('Fabricante', size=(15, 1)), sg.InputText()],
                     [sg.Text('Quantidade', size=(15, 1)), sg.InputText()],
-                    [sg.Text('Numero do ID: ', size=(15, 1)), sg.InputText()],
                     [sg.Submit(), sg.Cancel()]
                 ]
         window = sg.Window('Incluir Vacina').Layout(layout)
         button_str, items = window.read()
         print('Submit', items)
         if button_str == 'Submit':
-            # print(items, type(items))
-            # values = self.set_keys_to_attrs(items, {0:'tipo_vacina', 1: 'fabricante', 2: 'quantidade', 3: 'num_id'})
-            # print(values)
+            values = self.set_keys_to_attrs(items, ['tipo_vacina', 'fabricante', 'quantidade'])
             window.close()
             return items
         else:
@@ -76,13 +71,13 @@ class VacinaView(AbstractView):
                 [sg.Output(size=(40,30), key="_listagem_")],
                 [sg.Button('Voltar')]
         ]  
-        window = sg.Window('Listagem de Pacientes').Layout(layout)
+        window = sg.Window('Listagem de Vacinas').Layout(layout)
         button, values = window.Read(timeout=6)
 
         while button != 'Voltar' and button != None:
             window.FindElement("_listagem_").Update('')
             for vacina in listagem:
-                tipo_vacina = "Tipo de Vacina: " + str(paciente.nome_completo)
+                tipo_vacina = "Tipo de Vacina: " + str(vacina.tipo_vacina)
                 fabricante = "Fabricante: "+ str(vacina.fabricante)
                 quantidade = "Quantidade: "+ str(vacina.quantidade)
                 num_id = "num_id: "+ str(vacina.num_id)
@@ -91,7 +86,7 @@ class VacinaView(AbstractView):
                 for values in lista:
                     print(values)
             button, values = window.Read()
-        window.close()
+            window.close()
 
     def cadastro_sucesso(self):
         sg.popup("------- Vacina cadastrada com sucesso! -------")
