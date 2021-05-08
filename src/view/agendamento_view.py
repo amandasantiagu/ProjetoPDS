@@ -17,17 +17,37 @@ class AgendamentoView(AbstractView):
         return button_str[0]
 
     def incluir(self):
-        data = input("Data Escolhida: ")
-        horario = input("Horario Escolhida: ")
-        self.clear()
-        return {"data":data, "horario":horario}
+        layout = [
+                    [sg.Text('Data', size=(15, 1)), sg.InputText()],
+                    [sg.Text('Horario', size=(15, 1)), sg.InputText()],
+                    [sg.Submit(), sg.Cancel()]
+                ]
+        window = sg.Window('Incluir Agendamento').Layout(layout)
+        button_str, items = window.read()
+        if button_str == 'Submit':  
+            values = self.set_keys_to_attrss(items, ['data', 'horario'])
+            window.close()
+            return items
+        else:
+            window.close()
+            return None
 
-    def excluir(self):
-        data = input("Data de Agendamento: ")
-        horario = input("Horario de Agendamento:")
-        self.clear()
-        return {"data":data, "horario":horario}
-
+    def excluir(self, agendamentos):
+        agendamento_str = []
+        for agendamento in agendamentos:
+            agendamento_str.append(agendamento.data + ' -- ' + str(agendamento.horario))
+        layout = [
+                    [sg.Listbox(values=enfermeiro_str, select_mode='extended', key='agen', size=(30, 6))],
+                    [sg.Submit(), sg.Cancel()]
+                ]
+        window = sg.Window('Excluir Agendamento').Layout(layout)
+        button_str, items = window.read()
+        if button_str == 'Submit':
+            window.close()
+            return items['agen']
+        else:
+            window.close()
+            return None
 
     def atualizar(self, agendamento):
         # pegar dados de enf, paciente e os caraio a partir do agendamento obj
@@ -36,15 +56,27 @@ class AgendamentoView(AbstractView):
         return {"data":data, "horario":horario}
 
     def listagem(self, listagem):
-        self.clear()
-        print("\n Listagem de Agendamentos:")
-        for agendamento in listagem:
-            print(agendamento.paciente)
-            print("Data: " + agendamento.data)
-            print("Horario: " + agendamento.horario)
-            print("Paciente: " + agendamento.paciente.nome_completo)
-            print("Enfermeiro: " + agendamento.enfermeiro.nome_completo)
-            print("Vacina: " + agendamento.vacina)
+        layout = [
+                [sg.Output(size=(40,30), key="_listagem_")],
+                [sg.Button('Voltar')]
+        ]  
+        window = sg.Window('Listagem de Agendamentos').Layout(layout)
+        button, values = window.Read(timeout=6)
+
+        while button != 'Voltar' and button != None:
+            window.FindElement("_listagem_").Update('')
+            for agendamento in listagem:
+                data = "Data: " + str(agendamento.data)
+                horario = "Horario: "+  str(agendamento.horario)
+                paciente = "Paciente: " + str( agendamento.paciente.nome_completo)
+                enfermeiro = "Enfermeiro: " + str(agendamento.enfermeiro.nome_completo)
+                vacina = "Vacina: " + str(agendamento.vacina)
+                lista = ["----", data, horario, paciente, enfermeiro, vacina]
+             
+                for values in lista:
+                    print(values)
+            button, values = window.Read()
+        window.close()
 
 
     def relatorio(self):
