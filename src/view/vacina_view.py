@@ -35,22 +35,18 @@ class VacinaView(AbstractView):
             window.close()
             return None
 
-    def excluir(self):
+    def excluir(self, vacinas):
+        vacinas_str = []
+        for vacina in vacinas:
+            vacinas_str.append(vacina.tipo_vacina + ' -- ' + vacina.fabricante)
         layout = [
-                    [sg.Text('NUM ID', size=(15, 1)), sg.InputText()],
+                    [sg.Listbox(values=vacinas_str, select_mode='extended', key='vac', size=(30, 6))],
                     [sg.Submit(), sg.Cancel()]
                 ]
         window = sg.Window('Excluir Vacina').Layout(layout)
         button_str, items = window.read()
-        try:
-           num_id = int(items[0])
-        except ValueError:
-            self.dado_invalido('ID')
-            window.close()
-            return None
-        else:
-            window.close()    
-            return num_id
+        window.close()
+        return items['vac']
 
     def atualizar(self):
         self.clear()
