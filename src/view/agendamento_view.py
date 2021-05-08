@@ -11,7 +11,7 @@ class AgendamentoView(AbstractView):
                     [sg.Button('Remover Agendamento')],
                     [sg.Button('Sair')],
                 ]
-        window = sg.Window('Cadastro de Agendamentos').Layout(layout)
+        window = sg.Window('Cadastro de Agendamentos', size=(370,200)).Layout(layout)
         button_str = window.read()
         window.close()
         return button_str[0]

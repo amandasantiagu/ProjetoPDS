@@ -14,7 +14,7 @@ class EnfermeiroView(AbstractView):
                     [sg.Button('Remover Enfermeiro')],
                     [sg.Button('Sair')],
                 ]
-        window = sg.Window('Enfermeiros').Layout(layout)
+        window = sg.Window('Cadastro de Enfermeiro', size=(300,200)).Layout(layout)
         button_str = window.read()
         window.close()
         return button_str[0]
@@ -26,7 +26,7 @@ class EnfermeiroView(AbstractView):
                     [sg.Text('Matricula/COREN', size=(15, 1)), sg.InputText()],
                     [sg.Submit(), sg.Cancel()]
                 ]
-        window = sg.Window('Cadastrar Enfermeiro').Layout(layout)
+        window = sg.Window('Incluir Enfermeiro').Layout(layout)
         button_str, items = window.read()
         if button_str == 'Submit':  
             # values = self.set_keys_to_attrs(items, {0: 'nome_completo', 1: 'idade', 2: 'matricula_coren'})

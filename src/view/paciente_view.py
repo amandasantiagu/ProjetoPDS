@@ -12,7 +12,7 @@ class PacienteView(AbstractView):
                     [sg.Button('Remover Paciente')],
                     [sg.Button('Sair')],
                 ]
-        window = sg.Window('Pacientes').Layout(layout)
+        window = sg.Window('Cadastro de Pacientes', size=(300,200)).Layout(layout)
         button_str = window.read()
         window.close()
         return button_str[0]

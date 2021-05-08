@@ -12,7 +12,7 @@ class VacinaView(AbstractView):
                     [sg.Button('Remover Vacina')],
                     [sg.Button('Sair')],
                 ]
-        window = sg.Window('Vacinas').Layout(layout)
+        window = sg.Window('Cadastro de Vacinas', size=(300,200)).Layout(layout)
         button_str = window.read()
         window.close()
         return button_str[0]
@@ -26,7 +26,6 @@ class VacinaView(AbstractView):
                 ]
         window = sg.Window('Incluir Vacina').Layout(layout)
         button_str, items = window.read()
-        print('Submit', items)
         if button_str == 'Submit':
             values = self.set_keys_to_attrs(items, ['tipo_vacina', 'fabricante', 'quantidade'])
             window.close()
@@ -45,8 +44,12 @@ class VacinaView(AbstractView):
                 ]
         window = sg.Window('Excluir Vacina').Layout(layout)
         button_str, items = window.read()
-        window.close()
-        return items['vac']
+        if button_str == 'Submit':
+            window.close()
+            return items['vac']
+        else:
+            window.close()
+            return None
 
     def atualizar(self):
         self.clear()
