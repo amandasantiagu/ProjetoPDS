@@ -33,9 +33,7 @@ class PacienteController():
             except ValueError:
                 self.__view.dado_invalido()
             else:
-                # endereco = self.__endereco_view.novo()
                 novo_paciente = Paciente(nome, idade, cpf)
-                #novo_paciente.endereco = endereco
                 lista_pacientes = list(self.__pacienteDAO.get_all())
                 for paciente in lista_pacientes:
                     if paciente.cpf == cpf:
