@@ -32,9 +32,10 @@ class MainController:
                     'Alterar Nome do Posto': self.__controller_posto.incluir,
                     }
             escolha = self.__view.menu_principal()
-            opcoes[escolha]()
-    
-    def sair(self):
-        return
+            try:
+                opcoes[escolha]()
+            except KeyError:
+                return
+
 
 
