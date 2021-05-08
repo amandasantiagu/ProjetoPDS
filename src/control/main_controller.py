@@ -5,6 +5,7 @@ from .control_agendamento import AgendamentoController
 from .control_posto import PostoController
 from .control_relatorio import RelatorioController
 from ..view.main_view import TelaSistemaView
+from ..view.agendamento_view import AgendamentoView
 
 
 class MainController:
@@ -16,7 +17,7 @@ class MainController:
         self.__controller_enfermeiro = EnfermeiroController()
         self.__controller_vacina = VacinaController()
         self.__controller_agendamentos = AgendamentoController(self.__controller_posto.posto, self.__controller_paciente, self.__controller_enfermeiro)
-        self.__controller_relatorio = RelatorioController(self.__controller_paciente, self.__controller_agendamentos)
+        self.__controller_relatorio = RelatorioController(AgendamentoView())
         
 
     def run(self):

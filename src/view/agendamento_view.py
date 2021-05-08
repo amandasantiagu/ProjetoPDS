@@ -28,7 +28,7 @@ class AgendamentoView(AbstractView):
         self.clear()
         return {"data":data, "horario":horario}
 
-# TODO atualizar pra utilizar a gui
+
     def atualizar(self, agendamento):
         # pegar dados de enf, paciente e os caraio a partir do agendamento obj
         data = input("Data de Agendamento: ")
@@ -46,22 +46,27 @@ class AgendamentoView(AbstractView):
             print("Enfermeiro: " + agendamento.enfermeiro.nome_completo)
             print("Vacina: " + agendamento.vacina)
 
-    def cadastro_sucesso(self):
-        print("Agendamento cadastrado com sucesso!")
 
-    def agendamento_duplicado(self):
-        print("Erro! Agendamento já cadastrado.")
+    def relatorio(self):
+        layout = [
+                [sg.Output(size=(40,30), key="_listagem_")],
+                [sg.Button('Voltar')]
+        ]  
+        window = sg.Window('Listagem de Pacientes').Layout(layout)
+        button, values = window.Read(timeout=6)
 
-    def relatorio(self, agendamentos):
-        self.clear()
-        print("\n ---- RELATORIO GERAL ------:")
-        print("Data de Agendamentos Marcados: ")
-        print("Horario de Agendamentos Marcados: " )
-        print("Quantidade de Agendamentos Marcados: ")
-        print("Pacientes Agendados: ")
-        print("Quantidade de Pacientes atendidos: ")
-        print("Quantidade de Pacientes com agendamento marcados: ")
-        print("Quantidade de Vacinas Aplicadas: ")
-        print("Quantidade de Pacientes 1 dose Aplicada: ")
-        print("Quantidade de Pacientes 2 dose Aplicada: ")
+        while button != 'Voltar' and button != None:
+            window.FindElement("_listagem_").Update('')
 
+            print("\n ---- RELATORIO GERAL ------:")
+            print("Data de Agendamentos Marcados: ")
+            print("Horario de Agendamentos Marcados: " )
+            print("Quantidade de Agendamentos Marcados: ")
+            print("Pacientes Agendados: ")
+            print("Quantidade de Pacientes atendidos: ")
+            print("Quantidade de Pacientes com agendamento marcados: ")
+            print("Quantidade de Vacinas Aplicadas: ")
+            print("Quantidade de Pacientes 1 dose Aplicada: ")
+            print("Quantidade de Pacientes 2 dose Aplicada: ")
+            button, values = window.Read()
+        window.close()
