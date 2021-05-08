@@ -25,7 +25,7 @@ class AgendamentoView(AbstractView):
         window = sg.Window('Incluir Agendamento').Layout(layout)
         button_str, items = window.read()
         if button_str == 'Submit':  
-            values = self.set_keys_to_attrss(items, ['data', 'horario'])
+            values = self.set_keys_to_attrs(items, ['data', 'horario'])
             window.close()
             return items
         else:

@@ -29,7 +29,7 @@ class EnfermeiroView(AbstractView):
         window = sg.Window('Incluir Enfermeiro').Layout(layout)
         button_str, items = window.read()
         if button_str == 'Submit':  
-            values = self.set_keys_to_attrss(items, ['nome_completo', 'Idade', 'Matricula_coren'])
+            values = self.set_keys_to_attrs(items, ['nome_completo', 'Idade', 'Matricula_coren'])
             window.close()
             return items
         else:
