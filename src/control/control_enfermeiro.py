@@ -25,46 +25,62 @@ class EnfermeiroController():
 
     def incluir(self) -> Enfermeiro:
         dados = self.__view.incluir()
-        nome = dados['nome_completo']
-        idade = dados['idade']
-        matricula_coren = dados['matricula_coren']
-        #endereco = self.__endereco_view.novo()
-        novo_enfermeiro = Enfermeiro(nome, idade, matricula_coren)
-        #novo_enfermeiro.endereco = endereco
-        lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
-        for enfermeiro in lista_enfermeiros:
-            if enfermeiro.matricula_coren == matricula_coren:
-                self.__view.enfermeiro_duplicado()
-                return
-        if novo_enfermeiro.idade < 0 and novo_enfermeiro.idade >= 180:
-            self.__view.dado_invalido("Idade")
-            print("Idade")
-            return 
+        if dados != None:
+            nome = dados[0]
+            try:
+                idade = int(dados[1])
+                matricula_coren = int(dados[2])
+            except ValueError:
+                self.__view.dado_invalido('Idade e Matricula sao inteiros')
+            else:
+                #endereco = self.__endereco_view.novo()
+                novo_enfermeiro = Enfermeiro(nome, idade, matricula_coren)
+                #novo_enfermeiro.endereco = endereco
+                lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
+                for enfermeiro in lista_enfermeiros:
+                    if enfermeiro.matricula_coren == matricula_coren:
+                        self.__view.enfermeiro_duplicado()
+                        return
+                if novo_enfermeiro.idade < 0 and novo_enfermeiro.idade >= 180:
+                    self.__view.dado_invalido('idade')
+                    return 
 
-        self.__enfermeiroDAO.add(novo_enfermeiro)
-        self.__view.cadastro_sucesso()
+                self.__enfermeiroDAO.add(novo_enfermeiro)
+                self.__view.cadastro_sucesso()
 
     def listagem(self):
         self.__view.listagem(list(self.__enfermeiroDAO.get_all()))
 
-    def atualizar(self):
-        self.listagem()
-        dados = self.__view.atualizar()
+    def get_enfermeiro_att(self):
         lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
-        for enf in lista_enfermeiros:
-            if enf.matricula_coren == dados['matricula_coren']:
-                enf.nome_completo = dados['nome_completo']
-                enf.idade = dados['idade']
-                self.__view.sucesso_atualizar()
+        return self.__view.get_enfermeiro_att(lista_enfermeiros)
+
+
+    def atualizar(self):
+        enfermeiro_escolhido = self.get_enfermeiro_att()
+        enfermeiro_escolhido = enfermeiro_escolhido[0].split('---')
+        try:
+            idade_int = int(enfermeiro_escolhido[1])
+            matricula_coren_int = int(enfermeiro_escolhido[2])
+        except ValueError:
+            self.__view.dado_invalido()
+        else:
+            dados = self.__view.atualizar()
+            lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
+            for enfermeiro in lista_enfermeiros:
+                if enfermeiro.matricula_coren == matricula_coren_int:
+                    enfermeiro.nome_completo = dados[0]
+                    enfermeiro.idade = dados[1]
 
     def excluir(self):
-        self.listagem()
-        matricula_coren = self.__view.excluir()
         lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
-        for enfermeiro in self.enfermeiros:
-            if enfermeiro.matricula_coren == matricula_coren:
-                self.__enfermeiroDAO.remove(enfermeiro.matricula_coren)
-                self.__view.sucesso_excluir()
+        enfermeiros_a_excluir = self.__view.selecionar(lista_enfermeiros, acao='Excluir')
+        if lista_enfermeiros != None and enfermeiros_a_excluir != None:
+            for enfermeiros in lista_enfermeiros:
+                for exc in enfermeiros_a_excluir:
+                        if enfermeiro.nome_completo in exc and str(enfermeiro.matricula_coren) in exc:
+                            self.__enfermeiroDAO.remove(enfermeiro.matricula_coren)
+                            self.__view.sucesso_excluir()
 
     @property
     def enfermeiros(self):

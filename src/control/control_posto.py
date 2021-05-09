@@ -18,5 +18,6 @@ class PostoController:
 
     def incluir(self):
         nome = self.__view.incluir()
-        self.__posto.nome = nome
-        self.__postoDAO.update(1, self.__posto)
+        if nome != None:
+            self.__posto.nome = nome
+            self.__postoDAO.update(1, self.__posto)

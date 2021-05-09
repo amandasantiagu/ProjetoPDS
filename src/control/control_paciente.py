@@ -26,43 +26,59 @@ class PacienteController():
     def incluir(self) -> Paciente:
         dados = self.__view.incluir()
         if dados != None:
-            nome = dados['nome_completo']
-            idade = dados['idade']
+            nome = dados[0]
             try:
-                cpf = int(dados['cpf'])
-            except TypeError:
-                self.__view.dado_invalido('cpf')
-            # endereco = self.__endereco_view.novo()
-            novo_paciente = Paciente(nome, idade, cpf)
-            #novo_paciente.endereco = endereco
-            lista_pacientes = list(self.__pacienteDAO.get_all())
-            for paciente in lista_pacientes:
-                if paciente.cpf == cpf:
-                    self.__view.paciente_duplicado()
-                    return
-            self.__pacienteDAO.add(novo_paciente)
-            self.__view.cadastro_sucesso()
+                idade = int(dados[1])
+                cpf = int(dados[2])
+            except ValueError:
+                self.__view.dado_invalido()
+            else:
+                novo_paciente = Paciente(nome, idade, cpf)
+                lista_pacientes = list(self.__pacienteDAO.get_all())
+                for paciente in lista_pacientes:
+                    if paciente.cpf == cpf:
+                        self.__view.paciente_duplicado()
+                        return
+                self.__pacienteDAO.add(novo_paciente)
+                self.__view.cadastro_sucesso()
+
 
     def listagem(self):
         self.__view.listagem(list(self.__pacienteDAO.get_all()))
 
-    def atualizar(self):
-        self.listagem()
-        dados = self.__view.atualizar()
+
+    def get_pacient_att(self):
         lista_pacientes = list(self.__pacienteDAO.get_all())
-        for paciente in lista_pacientes:
-            if paciente.cpf == dados['cpf']:
-                paciente.nome_completo = dados['nome_completo']
-                paciente.idade = dados['idade']
+        return self.__view.get_pacient_att(lista_pacientes)
+
+
+    def atualizar(self):
+        paciente_escolhido = self.get_pacient_att()
+        paciente_escolhido = paciente_escolhido[0].split('---')
+        print(paciente_escolhido)
+        try:
+            idade_int = int(paciente_escolhido[1])
+            cpf_int = int(paciente_escolhido[2])
+        except ValueError:
+            self.__view.dado_invalido()
+        else:
+            dados = self.__view.atualizar()
+            lista_pacientes = list(self.__pacienteDAO.get_all())
+            for paciente in lista_pacientes:
+                if paciente.cpf == cpf_int:
+                    paciente.nome_completo = dados[0]
+                    paciente.idade = dados[1]
 
 
     def excluir(self):
-        cpf = self.__view.excluir()
         lista_pacientes = list(self.__pacienteDAO.get_all())
-        for paciente in lista_pacientes:
-            if paciente.cpf == cpf:
-                self.__pacienteDAO.remove(paciente.cpf)
-                self.__view.sucesso_excluir()
+        pacientes_a_excluir = self.__view.selecionar(lista_pacientes, acao='Excluir')
+        if lista_pacientes != None and pacientes_a_excluir != None:
+            for paciente in lista_pacientes:
+                for exc in pacientes_a_excluir:
+                        if paciente.nome_completo in exc and str(paciente.cpf) in exc:
+                            self.__pacienteDAO.remove(paciente.cpf)
+                            self.__view.sucesso_excluir()
 
     @property
     def pacientes(self):

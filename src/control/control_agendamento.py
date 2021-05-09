@@ -22,16 +22,16 @@ class AgendamentoController():
 
     def option(self):
         escolha = self.__agendamento_view.tela_agendamento()
-        options = {
-                1: self.incluir,
-                2: self.excluir,
-                3: self.atualizar,
-                4: self.listagem,
-                0: self.sair,
-                }
-        function = options[escolha]
-        function()
-
+        while escolha != 'Sair' and escolha != None:
+            options = {
+                    'Incluir Agendamento': self.incluir,
+                    'Listar Agendamentos':self.listagem,
+                    'Atualizar Agendamento': self.atualizar,
+                    'Remover Agendamento':  self.excluir
+                    }
+            function = options[escolha]
+            function()
+            escolha = self.__view.tela_agendamento()
 
     def incluir(self) -> Agendamento:
         dados = self.__agendamento_view.incluir()
@@ -62,9 +62,6 @@ class AgendamentoController():
 
     def listagem(self):
         self.__agendamento_view.listagem(self.__dao.get_all())
-
-    def sair(self):
-        return
 
     @property
     def agendamentos(self):
