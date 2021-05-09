@@ -5,31 +5,32 @@ from .posto import Posto
 
 class Agendamento():
     def __init__(self, 
-                 id: int,
+                 num_id: int,
                  data: str,
                  horario: str,
                  vacina: Vacina,
                  dose_vacina: int,
-                 posto: Posto,
+                 #posto: Posto,
                  enfermeiro: Enfermeiro = None,
                  paciente: Paciente = None):
+        self.__num_id = num_id
         self.__data = data
         self.__horario = horario
         self.__vacina = vacina
         self.__dose_vacina = dose_vacina
-        self.__posto = posto
+        #self.__posto = posto
         self.__enfermeiro = enfermeiro
         self.__paciente = paciente
 
 
     @property
-    def id(self):
-        return self.__id
+    def num_id(self):
+        return self.__num_id
 
 
-    @id.setter
-    def id(self, id):
-        self.__id = id
+    @num_id.setter
+    def num_id(self, num_id):
+        self.__num_id = num_id
 
 
     @property

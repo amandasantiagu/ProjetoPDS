@@ -6,7 +6,7 @@ class AgendamentoDAO(AbstractDAO):
 
 
     def add(self, agendamento):
-        super().add(agendamento)
+        super().add(agendamento, agendamento.num_id)
 
 
     def get(self, key):
