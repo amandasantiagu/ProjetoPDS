@@ -1,4 +1,3 @@
-import random
 from abc import ABC
 import pickle
 
@@ -50,14 +49,4 @@ class AbstractDAO(ABC):
 
     def get_all(self):
         return self.__cache.values()
-
-
-    def gen_id(self):
-        id = random.randint(1, 1000)
-        if(id in self.__cache.keys()):
-            id = gen_id()
-
-        return id
-
-
-
+    
