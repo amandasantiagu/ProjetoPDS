@@ -63,7 +63,7 @@ class EnfermeiroController():
 
     def excluir(self):
         lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
-        enfermeiros_a_excluir = self.__view.excluir(lista_enfermeiros)
+        enfermeiros_a_excluir = self.__view.selecionar(lista_enfermeiros, acao='Excluir')
         if lista_enfermeiros != None and enfermeiros_a_excluir != None:
             for enfermeiros in lista_enfermeiros:
                 for exc in enfermeiros_a_excluir:

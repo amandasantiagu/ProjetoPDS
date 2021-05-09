@@ -72,7 +72,7 @@ class PacienteController():
 
     def excluir(self):
         lista_pacientes = list(self.__pacienteDAO.get_all())
-        pacientes_a_excluir = self.__view.excluir(lista_pacientes)
+        pacientes_a_excluir = self.__view.selecionar(lista_pacientes, acao='Excluir')
         if lista_pacientes != None and pacientes_a_excluir != None:
             for paciente in lista_pacientes:
                 for exc in pacientes_a_excluir:
