@@ -27,28 +27,8 @@ class PacienteView(AbstractView):
         window = sg.Window('Incluir Paciente').Layout(layout)
         button_str, items = window.read()
         if button_str == 'Submit':  
-            values = self.set_keys_to_attrs(items, ['nome_completo', 'Idade', 'CPF'])
             window.close()
             return items
-        else:
-            window.close()
-            return None
-
-    def selecionar(self, pacientes, acao=None):
-        if acao is None:
-            acao = 'Selecionar'
-        paciente_str = []
-        for paciente in pacientes:
-            paciente_str.append(paciente.nome_completo + ' -- ' + str(paciente.cpf))
-        layout = [
-                    [sg.Listbox(values=paciente_str, select_mode='extended', key='pac', size=(30, 6))],
-                    [sg.Submit(), sg.Cancel()]
-                ]
-        window = sg.Window(acao + ' Paciente').Layout(layout)
-        button_str, items = window.read()
-        if button_str == 'Submit':
-            window.close()
-            return items['pac']
         else:
             window.close()
             return None
@@ -74,24 +54,22 @@ class PacienteView(AbstractView):
             button, values = window.Read()
         window.close()
 
-    def get_pacient_att(self, lista_pacientes):
+    def get_paciente_att(self, lista_pacientes):
         paciente_str = []
         for paciente in lista_pacientes:
             paciente_str.append(paciente.nome_completo + '---' + str(paciente.idade) + '---' + str(paciente.cpf))
         layout = [
                     [sg.Listbox(values=paciente_str, select_mode='extended', key='pac', size=(30, 6))],
-                    [sg.Submit(), sg.Cancel()]
+                    [sg.Submit(), sg.Button("Voltar")]
                 ]
         window = sg.Window('Escolha o Paciente').Layout(layout)
         button_str, items = window.read()
         if button_str == 'Submit':
-            ###QUANDO APERTA NO BOTAO SUBMIT EM VEZ DE VOLTAR ELE FECHA O PROGRAMA
             window.close()
             return items['pac']
         else:
             window.close()
             return None
-
 
     def atualizar(self):
         layout = [
@@ -103,7 +81,7 @@ class PacienteView(AbstractView):
         button_str, items = window.read()
         window.close()
         try:
-            idade= int(items[1])
+            items[1]= int(items[1])
         except ValueError:
             self.dado_invalido()
         else:
@@ -127,3 +105,6 @@ class PacienteView(AbstractView):
 
     def sucesso_excluir(self):
         sg.popup("------- Excluido com Sucesso -------.")
+
+    def error(self, error_msg: str):
+        sg.popup("ERRO: " + error_msg)

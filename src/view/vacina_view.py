@@ -22,39 +22,44 @@ class VacinaView(AbstractView):
                     [sg.Text('Tipo de Vacina', size=(15, 1)), sg.InputText()],
                     [sg.Text('Fabricante', size=(15, 1)), sg.InputText()],
                     [sg.Text('Quantidade', size=(15, 1)), sg.InputText()],
+                    [sg.Text('Nº Registro', size=(15, 1)), sg.InputText()],
                     [sg.Submit(), sg.Cancel()]
                 ]
         window = sg.Window('Incluir Vacina').Layout(layout)
         button_str, items = window.read()
         if button_str == 'Submit':
-            values = self.set_keys_to_attrs(items, ['tipo_vacina', 'fabricante', 'quantidade'])
             window.close()
             return items
         else:
             window.close()
             return None
 
-    def excluir(self, vacinas):
-        vacinas_str = []
-        for vacina in vacinas:
-            vacinas_str.append(vacina.tipo_vacina + ' -- ' + vacina.fabricante)
+    def listagem(self, listagem):
         layout = [
-                    [sg.Listbox(values=vacinas_str, select_mode='extended', key='vac', size=(30, 6))],
-                    [sg.Submit(), sg.Cancel()]
-                ]
-        window = sg.Window('Excluir Vacina').Layout(layout)
-        button_str, items = window.read()
-        if button_str == 'Submit':
+                [sg.Output(size=(40,30), key="_listagem_")],
+                [sg.Button('Voltar')]
+        ]  
+        window = sg.Window('Listagem de Vacinas').Layout(layout)
+        button, values = window.Read(timeout=6)
+        
+        while button != 'Voltar' and button != None:
+            window.FindElement("_listagem_").Update('')
+            for vacina in listagem:
+                tipo_vacina = "Tipo de Vacina: " + str(vacina.tipo_vacina)
+                fabricante = "Fabricante: "+ str(vacina.fabricante)
+                quantidade = "Quantidade: "+ str(vacina.quantidade)
+                num_registro = "Nº Registro: "+ str(vacina.num_registro)
+                lista = ["----", tipo_vacina, fabricante, quantidade, num_registro]
+             
+                for values in lista:
+                    print(values)
+            button, values = window.Read()
             window.close()
-            return items['vac']
-        else:
-            window.close()
-            return None
-    
+
     def get_vacina_att(self, lista_vacinas):
         vacina_str = []
         for vacina in lista_vacinas:
-            vacina_str.append(vacina.tipo_vacina + '---' + vacina.fabricante + '---' + str(vacina.quantidade) + '---' + str(vacina.num_id))
+            vacina_str.append(vacina.tipo_vacina + '---' + vacina.fabricante + '---' + str(vacina.quantidade) + '---' + str(vacina.num_registro))
         layout = [
                     [sg.Listbox(values=vacina_str, select_mode='extended', key='vac', size=(30, 6))],
                     [sg.Submit(), sg.Cancel()]
@@ -79,51 +84,14 @@ class VacinaView(AbstractView):
         button_str, items = window.read()
         window.close()
         try:
-            quantidade= int(items[2])
+            items[2]= int(items[2])
         except ValueError:
             self.dado_invalido()
         else:
             if 'Submit' in button_str:
-                window.close()
                 return items
             else:
                 return None
-
-    def atualizar(self):
-        self.clear()
-        print("\n Para atualizar o ID deve estar correto")
-        tipo_vacina = input("Tipo da Vacina: ")
-        fabricante = input("Fabricante: ")
-        try:
-            quantidade = int(input ("Quantidade: "))
-            num_id = int(input("Número do ID: "))
-        except ValueError:
-            self.dado_invalido('ID')
-            return self
-        else:
-            return {"tipo_vacina":tipo_vacina,"fabricante":fabricante, "quantidade": quantidade, "num_id": num_id}
-
-    def listagem(self, listagem):
-        layout = [
-                [sg.Output(size=(40,30), key="_listagem_")],
-                [sg.Button('Voltar')]
-        ]  
-        window = sg.Window('Listagem de Vacinas').Layout(layout)
-        button, values = window.Read(timeout=6)
-
-        while button != 'Voltar' and button != None:
-            window.FindElement("_listagem_").Update('')
-            for vacina in listagem:
-                tipo_vacina = "Tipo de Vacina: " + str(vacina.tipo_vacina)
-                fabricante = "Fabricante: "+ str(vacina.fabricante)
-                quantidade = "Quantidade: "+ str(vacina.quantidade)
-                num_id = "num_id: "+ str(vacina.num_id)
-                lista = ["----", tipo_vacina, fabricante, quantidade, num_id]
-             
-                for values in lista:
-                    print(values)
-            button, values = window.Read()
-            window.close()
 
     def cadastro_sucesso(self):
         sg.popup("------- Vacina cadastrada com sucesso! -------")
@@ -139,3 +107,6 @@ class VacinaView(AbstractView):
 
     def sucesso_excluir(self):
         sg.popup("------- Excluido com Sucesso -------.")
+
+    def error(self, error_msg: str):
+        sg.popup("ERRO: " + error_msg)
