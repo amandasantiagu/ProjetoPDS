@@ -36,7 +36,9 @@ class EnfermeiroView(AbstractView):
             window.close()
             return None
 
-    def excluir(self, enfermeiros):
+    def excluir(self, enfermeiros, acao = None):
+        if acao is None:
+            acao = 'Selecionar'
         enfermeiro_str = []
         for enfermeiro in enfermeiros:
             enfermeiro_str.append(enfermeiro.nome_completo + ' -- ' + str(enfermeiro.matricula_coren))
@@ -44,7 +46,7 @@ class EnfermeiroView(AbstractView):
                     [sg.Listbox(values=enfermeiro_str, select_mode='extended', key='enf', size=(30, 6))],
                     [sg.Submit(), sg.Cancel()]
                 ]
-        window = sg.Window('Excluir Paciente').Layout(layout)
+        window = sg.Window(acao + ' Paciente').Layout(layout)
         button_str, items = window.read()
         if button_str == 'Submit':
             window.close()

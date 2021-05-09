@@ -34,7 +34,9 @@ class PacienteView(AbstractView):
             window.close()
             return None
 
-    def excluir(self, pacientes):
+    def selecionar(self, pacientes, acao=None):
+        if acao is None:
+            acao = 'Selecionar'
         paciente_str = []
         for paciente in pacientes:
             paciente_str.append(paciente.nome_completo + ' -- ' + str(paciente.cpf))
@@ -42,7 +44,7 @@ class PacienteView(AbstractView):
                     [sg.Listbox(values=paciente_str, select_mode='extended', key='pac', size=(30, 6))],
                     [sg.Submit(), sg.Cancel()]
                 ]
-        window = sg.Window('Excluir Paciente').Layout(layout)
+        window = sg.Window(acao + ' Paciente').Layout(layout)
         button_str, items = window.read()
         if button_str == 'Submit':
             window.close()
