@@ -28,38 +28,18 @@ class EnfermeiroView(AbstractView):
                 ]
         window = sg.Window('Incluir Enfermeiro').Layout(layout)
         button_str, items = window.read()
-        if button_str == 'Submit':  
-            values = self.set_keys_to_attrs(items, ['nome_completo', 'Idade', 'Matricula_coren'])
+        if button_str == 'Submit': 
             window.close()
             return items
         else:
             window.close()
             return None
 
-    def selecionar(self, enfermeiros, acao = None):
-        if acao is None:
-            acao = 'Selecionar'
-        enfermeiro_str = []
-        for enfermeiro in enfermeiros:
-            enfermeiro_str.append(enfermeiro.nome_completo + ' -- ' +  str(enfermeiro.matricula_coren))
-        layout = [
-                    [sg.Listbox(values=enfermeiro_str, select_mode='extended', key='enf', size=(30, 6))],
-                    [sg.Submit(), sg.Cancel()]
-                ]
-        window = sg.Window(acao +'Enfermeiro').Layout(layout)
-        button_str, items = window.read()
-        if button_str == 'Submit':
-            window.close()
-            return items['enf']
-        else:
-            window.close()
-            return None
-    
     def listagem(self, listagem):
         layout = [
                 [sg.Output(size=(40,30), key="_listagem_")],
                 [sg.Button('Voltar')]
-        ]  
+        ] 
         window = sg.Window('Listagem de Enfermeiros').Layout(layout)
         button, values = window.Read(timeout=6)
 
@@ -103,7 +83,7 @@ class EnfermeiroView(AbstractView):
         button_str, items = window.read()
         window.close()
         try:
-            idade= int(items[1])
+            items[1] = int(items[1])
         except ValueError:
             self.dado_invalido()
         else:
@@ -119,11 +99,14 @@ class EnfermeiroView(AbstractView):
     def enfermeiro_duplicado(self):
         sg.popup("Erro! Enfermeiro já cadastrado.")
 
-    def dado_invalido(self, dado_str):
-        sg.popup("Erro! Dado inválido: ", dado_str)
+    def dado_invalido(self):
+        sg.popup("Erro! Dado inválido.")
 
     def sucesso_atualizar(self):
         sg.popup("------- Atualizado com Sucesso. --------")
 
     def sucesso_excluir(self):
         sg.popup("------- Excluido com Sucesso -------.")
+    
+    def error(self, error_msg: str):
+        sg.popup("ERRO: " + error_msg)

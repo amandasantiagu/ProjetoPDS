@@ -31,18 +31,16 @@ class EnfermeiroController():
                 idade = int(dados[1])
                 matricula_coren = int(dados[2])
             except ValueError:
-                self.__view.dado_invalido('Idade e Matricula sao inteiros')
+                self.__view.dado_invalido()
             else:
-                #endereco = self.__endereco_view.novo()
                 novo_enfermeiro = Enfermeiro(nome, idade, matricula_coren)
-                #novo_enfermeiro.endereco = endereco
                 lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
                 for enfermeiro in lista_enfermeiros:
                     if enfermeiro.matricula_coren == matricula_coren:
                         self.__view.enfermeiro_duplicado()
                         return
                 if novo_enfermeiro.idade < 0 and novo_enfermeiro.idade >= 180:
-                    self.__view.dado_invalido('idade')
+                    self.__view.dado_invalido()
                     return 
 
                 self.__enfermeiroDAO.add(novo_enfermeiro)
@@ -58,9 +56,19 @@ class EnfermeiroController():
 
     def atualizar(self):
         enfermeiro_escolhido = self.get_enfermeiro_att()
-        enfermeiro_escolhido = enfermeiro_escolhido[0].split('---')
+        if enfermeiro_escolhido != None:
+            try:
+                enfermeiro_escolhido = enfermeiro_escolhido[0].split('---')
+            except IndexError:
+                #Erro ao clicar submit sem selecionar -> enfermeiro_escolhido = [] - lista vazia
+                self.__view.error("Nenhum Enfermeiro Escolhido")
+                return
+        else:
+            #Fecha a janela e volta se clicar em Voltar -> enfermeiro_escolhido = None
+            return
+
         try:
-            idade_int = int(enfermeiro_escolhido[1])
+            enfermeiro_escolhido[1] = int(enfermeiro_escolhido[1])
             matricula_coren_int = int(enfermeiro_escolhido[2])
         except ValueError:
             self.__view.dado_invalido()
@@ -71,16 +79,19 @@ class EnfermeiroController():
                 if enfermeiro.matricula_coren == matricula_coren_int:
                     enfermeiro.nome_completo = dados[0]
                     enfermeiro.idade = dados[1]
+                    self.__enfermeiroDAO.add(enfermeiro)
 
     def excluir(self):
         lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
-        enfermeiros_a_excluir = self.__view.selecionar(lista_enfermeiros, acao='Excluir')
+        enfermeiros_a_excluir = self.__view.get_enfermeiro_att(lista_enfermeiros)
         if lista_enfermeiros != None and enfermeiros_a_excluir != None:
-            for enfermeiros in lista_enfermeiros:
+            for enfermeiro in lista_enfermeiros:
                 for exc in enfermeiros_a_excluir:
                         if enfermeiro.nome_completo in exc and str(enfermeiro.matricula_coren) in exc:
                             self.__enfermeiroDAO.remove(enfermeiro.matricula_coren)
                             self.__view.sucesso_excluir()
+                            return
+            self.__view.error("Nenhum enfermeiro selecionado!")
 
     @property
     def enfermeiros(self):
