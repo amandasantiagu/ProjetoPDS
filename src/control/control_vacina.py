@@ -26,20 +26,24 @@ class VacinaController():
     def incluir(self) -> Vacina:
         data = self.__view.incluir()
         if data != None:
-            tipo_vacina = data['tipo_vacina']
-            fabricante = data['fabricante']
+            tipo_vacina = data[0]
+            fabricante = data[1]
             try:
-                quantidade = int(data['quantidade'])
+                quantidade = int(data[2])
+                num_registro = int(data[3])
             except ValueError:
                 self.__view.dado_invalido()
-            nova_vacina = Vacina(tipo_vacina, fabricante, quantidade)
-            lista_vacinas = list(self.__vacinaDAO.get_all())
-            for vacina in lista_vacinas:
-                if vacina.num_id == num_id:
-                    self.__view.vacina_duplicada()
-                    return
-            self.__vacinaDAO.add(nova_vacina)
-            self.__view.cadastro_sucesso()
+            else:
+                nova_vacina = Vacina(tipo_vacina, fabricante, quantidade, num_registro)
+                lista_vacinas = list(self.__vacinaDAO.get_all())
+                for vacina in lista_vacinas:
+                    if vacina.num_id == num_registro:
+                        self.__view.vacina_duplicada()
+                        return
+                self.__vacinaDAO.add(nova_vacina)
+                self.__view.cadastro_sucesso()
+        else:
+            return
 
 
     def listagem(self):
@@ -48,47 +52,48 @@ class VacinaController():
     def get_vacina_att(self):
         lista_vacinas = list(self.__vacinaDAO.get_all())
         return self.__view.get_vacina_att(lista_vacinas)
-        print(lista_vacinas)
 
     def atualizar(self):
-        vacina_escolhido = self.get_vacina_att()
-        vacina_escolhido = vacina_escolhido[0].split('---')
+        vacina_escolhida = self.get_vacina_att()
+        if vacina_escolhida != None:
+            try:
+                vacina_escolhida = vacina_escolhida[0].split('---')
+            except IndexError:
+                #Erro ao clicar submit sem selecionar -> vacina_escolhida = [] - lista vazia
+                self.__view.error("Nenhum Paciente Escolhido")
+                return
+        else:
+            #Fecha a janela e volta se clicar em Voltar -> paciente_escolhido = None
+            return
         try:
-            quantidade_int = int(paciente_escolhido[2])
+            vacina_escolhida[2] = int(vacina_escolhida[2])
+            num_registro = int(vacina_escolhida[3])
         except ValueError:
             self.__view.dado_invalido()
         else:
             dados = self.__view.atualizar()
             lista_vacinas = list(self.__vacinaDAO.get_all())
             for vacina in lista_vacinas:
-                if vacina.num_id == num_id:
+                if vacina.num_registro == num_registro:
                     vacina.tipo_vacina = dados[0]
                     vacina.fabricante = dados[1]
                     vacina.quantidade = dados[2]
-
-    def atualizar(self):
-        self.listagem()
-        data = self.__view.atualizar()
-        lista_vacinas = list(self.__vacinaDAO.get_all())
-        for vacina in lista_vacinas:
-            if vacina.num_id == data['num_id']:
-                vacina.tipo_vacina = data['tipo_vacina']
-                vacina.fabricante = data['fabricante']
-                vacina.quantidade = data['quantidade']
-
+                    self.__vacinaDAO.add(vacina)
 
     def excluir(self):
         lista_vacinas = list(self.__vacinaDAO.get_all())
-        vacinas_a_excluir = self.__view.excluir(lista_vacinas)
+        vacinas_a_excluir = self.__view.get_vacina_att(lista_vacinas)
         if lista_vacinas != None and vacinas_a_excluir != None:
             for vacina in lista_vacinas:
                 for exc in vacinas_a_excluir:
                     if vacina.tipo_vacina in exc and vacina.fabricante in exc:
-                        self.__vacinaDAO.remove(vacina.num_id)
+                        self.__vacinaDAO.remove(vacina.num_registro)
                         self.__view.sucesso_excluir()
+                        return
+            self.__view.error("Nenhuma vacina selecionada!")
 
     @property
-    def vacinas(self):
+    def lista_vacinas(self):
         return list(self.__vacinaDAO.get_all())
 
 
