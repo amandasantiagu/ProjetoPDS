@@ -26,10 +26,10 @@ class PacienteController():
     def incluir(self) -> Paciente:
         dados = self.__view.incluir()
         if dados != None:
-            nome = dados['nome_completo']
+            nome = dados[0]
             try:
-                idade = int(dados['Idade'])
-                cpf = int(dados['CPF'])
+                idade = int(dados[1])
+                cpf = int(dados[2])
             except ValueError:
                 self.__view.dado_invalido()
             else:

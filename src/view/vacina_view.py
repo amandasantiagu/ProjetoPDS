@@ -50,6 +50,44 @@ class VacinaView(AbstractView):
         else:
             window.close()
             return None
+    
+    def get_vacina_att(self, lista_vacinas):
+        vacina_str = []
+        for vacina in lista_vacinas:
+            vacina_str.append(vacina.tipo_vacina + '---' + vacina.fabricante + '---' + str(vacina.quantidade) + '---' + str(vacina.num_id))
+        layout = [
+                    [sg.Listbox(values=vacina_str, select_mode='extended', key='vac', size=(30, 6))],
+                    [sg.Submit(), sg.Cancel()]
+                ]
+        window = sg.Window('Escolha a Vacina').Layout(layout)
+        button_str, items = window.read()
+        if button_str == 'Submit':
+            window.close()
+            return items['vac']
+        else:
+            window.close()
+            return None
+
+    def atualizar(self):
+        layout = [
+                    [sg.Text('Tipo de Vacina', size=(15, 1)), sg.InputText()],
+                    [sg.Text('Fabricante', size=(15, 1)), sg.InputText()],
+                    [sg.Text('Quantidade', size=(15, 1)), sg.InputText()],
+                    [sg.Submit(), sg.Cancel()]
+        ]
+        window = sg.Window('Atualizar Vacina').Layout(layout)
+        button_str, items = window.read()
+        window.close()
+        try:
+            quantidade= int(items[2])
+        except ValueError:
+            self.dado_invalido()
+        else:
+            if 'Submit' in button_str:
+                window.close()
+                return items
+            else:
+                return None
 
     def atualizar(self):
         self.clear()

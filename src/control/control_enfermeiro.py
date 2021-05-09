@@ -51,15 +51,26 @@ class EnfermeiroController():
     def listagem(self):
         self.__view.listagem(list(self.__enfermeiroDAO.get_all()))
 
-    def atualizar(self):
-        self.listagem()
-        dados = self.__view.atualizar()
+    def get_enfermeiro_att(self):
         lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
-        for enf in lista_enfermeiros:
-            if enf.matricula_coren == dados['matricula_coren']:
-                enf.nome_completo = dados['nome_completo']
-                enf.idade = dados['idade']
-                self.__view.sucesso_atualizar()
+        return self.__view.get_enfermeiro_att(lista_enfermeiros)
+
+
+    def atualizar(self):
+        enfermeiro_escolhido = self.get_enfermeiro_att()
+        enfermeiro_escolhido = enfermeiro_escolhido[0].split('---')
+        try:
+            idade_int = int(enfermeiro_escolhido[1])
+            matricula_coren_int = int(enfermeiro_escolhido[2])
+        except ValueError:
+            self.__view.dado_invalido()
+        else:
+            dados = self.__view.atualizar()
+            lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
+            for enfermeiro in lista_enfermeiros:
+                if enfermeiro.matricula_coren == matricula_coren_int:
+                    enfermeiro.nome_completo = dados[0]
+                    enfermeiro.idade = dados[1]
 
     def excluir(self):
         lista_enfermeiros = list(self.__enfermeiroDAO.get_all())
@@ -68,7 +79,7 @@ class EnfermeiroController():
             for enfermeiros in lista_enfermeiros:
                 for exc in enfermeiros_a_excluir:
                         if enfermeiro.nome_completo in exc and str(enfermeiro.matricula_coren) in exc:
-                            self.__pacienteDAO.remove(enfermeiros.matricula_coren)
+                            self.__enfermeiroDAO.remove(enfermeiro.matricula_coren)
                             self.__view.sucesso_excluir()
 
     @property

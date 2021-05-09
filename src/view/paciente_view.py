@@ -85,6 +85,7 @@ class PacienteView(AbstractView):
         window = sg.Window('Escolha o Paciente').Layout(layout)
         button_str, items = window.read()
         if button_str == 'Submit':
+            ###QUANDO APERTA NO BOTAO SUBMIT EM VEZ DE VOLTAR ELE FECHA O PROGRAMA
             window.close()
             return items['pac']
         else:

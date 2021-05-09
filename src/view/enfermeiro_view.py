@@ -36,17 +36,17 @@ class EnfermeiroView(AbstractView):
             window.close()
             return None
 
-    def excluir(self, enfermeiros, acao = None):
+    def selecionar(self, enfermeiros, acao = None):
         if acao is None:
             acao = 'Selecionar'
         enfermeiro_str = []
         for enfermeiro in enfermeiros:
-            enfermeiro_str.append(enfermeiro.nome_completo + ' -- ' + str(enfermeiro.matricula_coren))
+            enfermeiro_str.append(enfermeiro.nome_completo + ' -- ' +  str(enfermeiro.matricula_coren))
         layout = [
                     [sg.Listbox(values=enfermeiro_str, select_mode='extended', key='enf', size=(30, 6))],
                     [sg.Submit(), sg.Cancel()]
                 ]
-        window = sg.Window(acao + ' Paciente').Layout(layout)
+        window = sg.Window(acao +'Enfermeiro').Layout(layout)
         button_str, items = window.read()
         if button_str == 'Submit':
             window.close()
@@ -76,32 +76,42 @@ class EnfermeiroView(AbstractView):
             button, values = window.Read()
         window.close()
 
+    def get_enfermeiro_att(self, lista_enfermeiros):
+        enfermeiro_str = []
+        for enfermeiro in lista_enfermeiros:
+            enfermeiro_str.append(enfermeiro.nome_completo + '---' + str(enfermeiro.idade) + '---' + str(enfermeiro.matricula_coren))
+        layout = [
+                    [sg.Listbox(values=enfermeiro_str, select_mode='extended', key='enf', size=(30, 6))],
+                    [sg.Submit(), sg.Cancel()]
+                ]
+        window = sg.Window('Escolha o Enfermeiro').Layout(layout)
+        button_str, items = window.read()
+        if button_str == 'Submit':
+            window.close()
+            return items['enf']
+        else:
+            window.close()
+            return None
+
     def atualizar(self):
-        self.clear()
-        print("\n Para atualizar a Matricula deve estar correta")
-        nome_completo = input("Nome do Enfermeiro: ")
-        idade = self.le_inteiro("Idade: ", range(1, 150))
+        layout = [
+                    [sg.Text('Nome', size=(15, 1)), sg.InputText()],
+                    [sg.Text('Idade', size=(15, 1)), sg.InputText()],
+                    [sg.Submit(), sg.Cancel()]
+        ]
+        window = sg.Window('Atualizar Enfermeiro').Layout(layout)
+        button_str, items = window.read()
+        window.close()
         try:
-           matricula_coren = int(input("Digite a MATRICULA/COREN para EXCLUIR: "))
-           return {'nome_completo': nome_completo, 'idade':idade, 'matricula_coren': matricula_coren}
+            idade= int(items[1])
         except ValueError:
-            self.dado_invalido('matricula_coren')
-            return
-
-
-    # def selecionar(self, enfermeiros):
-    #     count = 1
-    #     print("Selecione um enfermeiro")
-    #     for enfermeiro in enfermeiros:
-    #         print("Enfermeiro nº: ", count)
-    #         print("Nome: " + enfermeiro.nome_completo)
-    #         print("Idade: "+ str(enfermeiro.idade))
-    #         print("Matricula: "+ str(enfermeiro.matricula_coren))
-    #         print("--------------------------------\n")
-    #         count += 1
-
-    #     escolha = self.le_inteiro("-->", opcoes = range(1, count))
-    #     return enfermeiros[escolha - 1]
+            self.dado_invalido()
+        else:
+            if 'Submit' in button_str:
+                window.close()
+                return items
+            else:
+                return None
 
     def cadastro_sucesso(self):
         sg.popup("------- Enfermeiro cadastrado com sucesso! -------")

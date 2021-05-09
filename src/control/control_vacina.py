@@ -45,6 +45,26 @@ class VacinaController():
     def listagem(self):
         self.__view.listagem(list(self.__vacinaDAO.get_all()))
 
+    def get_vacina_att(self):
+        lista_vacinas = list(self.__vacinaDAO.get_all())
+        return self.__view.get_vacina_att(lista_vacinas)
+        print(lista_vacinas)
+
+    def atualizar(self):
+        vacina_escolhido = self.get_vacina_att()
+        vacina_escolhido = vacina_escolhido[0].split('---')
+        try:
+            quantidade_int = int(paciente_escolhido[2])
+        except ValueError:
+            self.__view.dado_invalido()
+        else:
+            dados = self.__view.atualizar()
+            lista_vacinas = list(self.__vacinaDAO.get_all())
+            for vacina in lista_vacinas:
+                if vacina.num_id == num_id:
+                    vacina.tipo_vacina = dados[0]
+                    vacina.fabricante = dados[1]
+                    vacina.quantidade = dados[2]
 
     def atualizar(self):
         self.listagem()
