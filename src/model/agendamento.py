@@ -1,7 +1,6 @@
 from .paciente import Paciente
 from .enfermeiro import Enfermeiro
 from .vacina import Vacina
-from .posto import Posto
 
 class Agendamento():
     def __init__(self, 
@@ -10,7 +9,6 @@ class Agendamento():
                  horario: str,
                  vacina: Vacina,
                  dose_vacina: int,
-                 #posto: Posto,
                  enfermeiro: Enfermeiro = None,
                  paciente: Paciente = None):
         self.__num_id = num_id
@@ -18,7 +16,6 @@ class Agendamento():
         self.__horario = horario
         self.__vacina = vacina
         self.__dose_vacina = dose_vacina
-        #self.__posto = posto
         self.__enfermeiro = enfermeiro
         self.__paciente = paciente
 
