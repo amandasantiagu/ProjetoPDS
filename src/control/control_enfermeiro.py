@@ -8,7 +8,6 @@ class EnfermeiroController():
     def __init__(self):
         self.__enfermeiroDAO = EnfermeiroDAO()
         self.__view = EnfermeiroView()
-        ##self.__endereco_view = EnderecoView()
 
     def option(self):
         escolha = self.__view.tela_enfermeiro()
@@ -60,7 +59,6 @@ class EnfermeiroController():
             try:
                 enfermeiro_escolhido = enfermeiro_escolhido[0].split('---')
             except IndexError:
-                #Erro ao clicar submit sem selecionar -> enfermeiro_escolhido = [] - lista vazia
                 self.__view.error("Nenhum Enfermeiro Escolhido")
                 return
         else:

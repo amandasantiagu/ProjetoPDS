@@ -37,7 +37,7 @@ class VacinaController():
                 nova_vacina = Vacina(tipo_vacina, fabricante, quantidade, num_registro)
                 lista_vacinas = list(self.__vacinaDAO.get_all())
                 for vacina in lista_vacinas:
-                    if vacina.num_id == num_registro:
+                    if vacina.num_registro == num_registro:
                         self.__view.vacina_duplicada()
                         return
                 self.__vacinaDAO.add(nova_vacina)
