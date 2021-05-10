@@ -53,12 +53,6 @@ class AgendamentoView(AbstractView):
             window.close()
             return None
 
-    # def atualizar(self, agendamento):
-    #     # pegar dados de enf, paciente e os caraio a partir do agendamento obj
-    #     data = input("Data de Agendamento: ")
-    #     horario = input("Horario de Agendamento: ")
-    #     return {"data":data, "horario":horario}
-
     def listagem(self, listagem):
         layout = [
                 [sg.Output(size=(40,30), key="_listagem_")],
@@ -91,27 +85,51 @@ class AgendamentoView(AbstractView):
         window.close()
 
 
-    def relatorio(self):
+    def relatorio(self, lista_agendamentos, lista_pacientes):
+        num_agendamentos = 0
+        datas = []
+        pacientes_doseum = 0
+        pacientes_dosedois = 0
+        for ag in lista_agendamentos:
+            datas.append(ag.data)
+            num_agendamentos +=1
+
+            if ag.paciente.dose_vacina == 1:
+                pacientes_doseum += 1
+            if ag.paciente.dose_vacina == 2:
+                pacientes_dosedois += 1
+        
+        horarios = []
+        for ag in lista_agendamentos:
+            horarios.append(ag.horario)
+
+        num_pacientes = 0
+
+        for pac in lista_pacientes:
+            num_pacientes += 1
         layout = [
                 [sg.Output(size=(40,30), key="_listagem_")],
                 [sg.Button('Voltar')]
         ]  
-        window = sg.Window('Listagem de Pacientes').Layout(layout)
+        window = sg.Window('Relatorio de Vacinaçao').Layout(layout)
         button, values = window.Read(timeout=6)
 
         while button != 'Voltar' and button != None:
             window.FindElement("_listagem_").Update('')
 
             print("\n ---- RELATORIO GERAL ------:")
-            print("Data de Agendamentos Marcados: ")
-            print("Horario de Agendamentos Marcados: " )
-            print("Quantidade de Agendamentos Marcados: ")
-            print("Pacientes Agendados: ")
-            print("Quantidade de Pacientes atendidos: ")
-            print("Quantidade de Pacientes com agendamento marcados: ")
-            print("Quantidade de Vacinas Aplicadas: ")
-            print("Quantidade de Pacientes 1 dose Aplicada: ")
-            print("Quantidade de Pacientes 2 dose Aplicada: ")
+            print(" -> Data de Agendamentos Marcados: ")
+            for data in datas:
+                print(data)
+            print("\nHorario de Agendamentos Marcados: " )
+            for horario in horarios:
+                print(horario)
+            print("\nQuantidade de Agendamentos Marcados: " + str(num_agendamentos))
+            print("\nPacientes com agendamento marcado: " + str(num_agendamentos) )
+            print("\nPacientes aguardando agendamento: " + str(num_pacientes - num_agendamentos))
+            print("\nQuantidade de Vacinas Aplicadas: " + str(num_agendamentos))
+            print("\nQuantidade de Pacientes 1 dose Aplicada: " + str(pacientes_doseum))
+            print("\nQuantidade de Pacientes 2 dose Aplicada: " + str(pacientes_dosedois))
             button, values = window.Read()
         window.close()
 

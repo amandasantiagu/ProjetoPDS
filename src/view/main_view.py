@@ -11,7 +11,7 @@ class TelaSistemaView:
                 [sg.Button('Enfermeiro')],
                 [sg.Button('Vacinas')],
                 [sg.Button('Agendamentos')],
-                [sg.Button('Relatório Geral - Não Implementado')],
+                [sg.Button('Relatório Geral')],
                 [sg.Button('Alterar Nome do Posto')],
                 [sg.Button('Sair')],
                 ]

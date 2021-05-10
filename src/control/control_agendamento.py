@@ -110,12 +110,9 @@ class AgendamentoController():
                 return
         self.__agendamento_view.error("Nenhum agendamento selecionado!")
 
-    ########### EM DUVIDA DE COMO ACESSAR MEU PACIENTE/ENFERMEIRO P EDITAR
-    def atualizar(self, agendamento):
-        #agendamento_escolhido = self.get_pacient_att()
-        #dados = self.__agendamento_view.atualizar(agendamento)
-        #self.__dao.update(agendamento, agendamento.id)
-        pass
+    def relatorio(self):
+        lista_agendamentos = list(self.__dao.get_all())
+        self.__agendamento_view.relatorio(lista_agendamentos, self.__paciente_controller.pacientes)
 
     @property
     def agendamentos(self):
