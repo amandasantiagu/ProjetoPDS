@@ -1,6 +1,5 @@
 from ..model.paciente import Paciente
 from ..view.paciente_view import PacienteView
-from ..view.endereco_view import EnderecoView
 from ..model.persistence.pacienteDAO import PacienteDAO
 
 

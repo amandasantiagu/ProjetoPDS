@@ -1,6 +1,5 @@
 from ..model.enfermeiro import Enfermeiro
 from ..view.enfermeiro_view import EnfermeiroView
-from ..view.endereco_view import EnderecoView
 from ..model.persistence.enfermeiroDAO import EnfermeiroDAO
 
 
